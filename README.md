@@ -49,10 +49,12 @@ python manage.py migrate
 5. **Run the development server**
 ```bash
 python manage.py runserver
+and
+streamlit run calculos/streamlit_app.py
 ```
 
 6. **Access the application**
-Open your browser and go to: http://127.0.0.1:8000/
+Open your browser and go to: http://127.0.0.1:8000/ and http://localhost:8501/
 
 ## Project Structure
 
