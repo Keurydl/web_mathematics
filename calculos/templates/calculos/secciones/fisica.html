@@ -1,0 +1,570 @@
+{% extends 'calculos/secciones/base_seccion.html' %}
+
+{% block content %}
+    {{ block.super }}
+
+    <!-- Font Awesome CDN para los iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        .feature-card {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .feature-card h3 {
+            font-size: 1.5rem;
+            color: #343a40;
+        }
+        .feature-card .icon {
+            font-size: 2.5rem;
+            color: #007bff;
+            margin-right: 15px;
+        }
+        .formula {
+            background-color: #f1f8ff;
+            border-left: 4px solid #007bff;
+            padding: 10px 15px;
+            border-radius: 0 5px 5px 0;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+
+    <div class="container mt-4">
+        <h1 class="mb-4"><i class="fas fa-atom"></i> Física - Mecánica Clásica</h1>
+        
+        <!-- Pestañas de navegación -->
+        <ul class="nav nav-tabs mb-4" id="fisicaTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="conceptos-tab" data-bs-toggle="tab" data-bs-target="#conceptos" type="button" role="tab">
+                    <i class="fas fa-book-open me-2"></i>Conceptos Básicos
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="newton-tab" data-bs-toggle="tab" data-bs-target="#newton" type="button" role="tab">
+                    <i class="fas fa-balance-scale me-2"></i>Leyes de Newton
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="energia-tab" data-bs-toggle="tab" data-bs-target="#energia" type="button" role="tab">
+                    <i class="fas fa-bolt me-2"></i>Energía
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="movimiento-tab" data-bs-toggle="tab" data-bs-target="#movimiento" type="button" role="tab">
+                    <i class="fas fa-running me-2"></i>Movimiento
+                </button>
+            </li>
+        </ul>
+
+    <!-- Contenido de las pestañas -->
+    <div class="tab-content p-3 border border-top-0 rounded-bottom" id="fisicaTabsContent">
+        
+        <!-- Pestaña de Conceptos Básicos -->
+        <div class="tab-pane fade show active" id="conceptos" role="tabpanel">
+            <h3 class="mb-4"><i class="fas fa-book-open me-2"></i>Conceptos Fundamentales</h3>
+            
+            <div class="row">
+                <!-- Tarjeta de Movimiento -->
+                <div class="col-md-6 mb-4">
+                    <div class="feature-card h-100">
+                        <div class="d-flex align-items-start">
+                            <i class="fas fa-arrows-alt icon"></i>
+                            <div>
+                                <h4>Movimiento</h4>
+                                <p class="mb-3">El movimiento es el cambio de posición de un cuerpo en el espacio respecto a un sistema de referencia a lo largo del tiempo.</p>
+                                <div class="formula">
+                                    <strong>Ecuación de posición:</strong><br>
+                                    \( \vec{r}(t) = \vec{r}_0 + \vec{v}_0 t + \frac{1}{2} \vec{a} t^2 \)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta de Velocidad -->
+                <div class="col-md-6 mb-4">
+                    <div class="feature-card h-100">
+                        <div class="d-flex align-items-start">
+                            <i class="fas fa-tachometer-alt icon"></i>
+                            <div>
+                                <h4>Velocidad</h4>
+                                <p class="mb-3">La velocidad es la magnitud física que expresa la variación de posición de un objeto en función del tiempo.</p>
+                                <div class="formula">
+                                    <strong>Velocidad media:</strong><br>
+                                    \( \vec{v}_{m} = \frac{\Delta \vec{r}}{\Delta t} \)
+                                    <hr class="my-2">
+                                    <strong>Velocidad instantánea:</strong><br>
+                                    \( \vec{v} = \frac{d\vec{r}}{dt} \)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta de Aceleración -->
+                <div class="col-md-6 mb-4">
+                    <div class="feature-card h-100">
+                        <div class="d-flex align-items-start">
+                            <i class="fas fa-bolt icon"></i>
+                            <div>
+                                <h4>Aceleración</h4>
+                                <p class="mb-3">La aceleración es la tasa de cambio de la velocidad con respecto al tiempo.</p>
+                                <div class="formula">
+                                    <strong>Aceleración media:</strong><br>
+                                    \( \vec{a}_{m} = \frac{\Delta \vec{v}}{\Delta t} \)
+                                    <hr class="my-2">
+                                    <strong>Aceleración instantánea:</strong><br>
+                                    \( \vec{a} = \frac{d\vec{v}}{dt} \)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pestaña de Leyes de Newton -->
+        <div class="tab-pane fade" id="newton" role="tabpanel">
+            <h3 class="mb-4"><i class="fas fa-balance-scale me-2"></i>Las Tres Leyes de Newton</h3>
+            
+            <div class="row">
+                <!-- Primera Ley -->
+                <div class="col-md-6 mb-4">
+                    <div class="feature-card h-100">
+                        <div class="d-flex align-items-start">
+                            <i class="fas fa-couch icon text-primary"></i>
+                            <div>
+                                <h4>Primera Ley: Ley de Inercia</h4>
+                                <p class="mb-3">Un objeto en reposo permanecerá en reposo, y un objeto en movimiento continuará moviéndose a velocidad constante en línea recta, a menos que actúe sobre él una fuerza externa neta.</p>
+                                
+                                <div class="formula">
+                                    <strong>Condición de equilibrio:</strong><br>
+                                    \( \sum \vec{F} = 0 \Rightarrow \vec{a} = 0 \)
+                                </div>
+                                
+                                <div class="mt-3">
+                                    <h5><i class="fas fa-lightbulb text-warning"></i> Ejemplo Práctico</h5>
+                                    <p class="small">Cuando un autobús frena bruscamente, los pasajeros se inclinan hacia adelante debido a su inercia, que tiende a mantener su estado de movimiento.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Segunda Ley -->
+                <div class="col-md-6 mb-4">
+                    <div class="feature-card h-100">
+                        <div class="d-flex align-items-start">
+                            <i class="fas fa-rocket icon text-danger"></i>
+                            <div>
+                                <h4>Segunda Ley: Ley Fundamental de la Dinámica</h4>
+                                <p class="mb-3">La aceleración de un objeto es directamente proporcional a la fuerza neta aplicada e inversamente proporcional a su masa.</p>
+                                
+                                <div class="formula">
+                                    <strong>Ecuación fundamental:</strong><br>
+                                    \( \sum \vec{F} = m \cdot \vec{a} \)
+                                </div>
+                                
+                                <div class="mt-3">
+                                    <h5><i class="fas fa-calculator text-info"></i> Aplicaciones</h5>
+                                    <ul class="small">
+                                        <li>Calcular la fuerza necesaria para acelerar un objeto</li>
+                                        <li>Determinar la masa de un objeto a partir de su aceleración</li>
+                                        <li>Analizar sistemas con múltiples fuerzas</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tercera Ley -->
+                <div class="col-12 mb-4">
+                    <div class="feature-card">
+                        <div class="d-flex align-items-start">
+                            <i class="fas fa-people-arrows icon text-success"></i>
+                            <div>
+                                <h4>Tercera Ley: Principio de Acción y Reacción</h4>
+                                <p class="mb-3">Cuando un cuerpo ejerce una fuerza sobre otro, el segundo ejerce sobre el primero una fuerza de igual magnitud y dirección opuesta.</p>
+                                
+                                <div class="formula">
+                                    \( \vec{F}_{1 \rightarrow 2} = -\vec{F}_{2 \rightarrow 1} \)
+                                </div>
+                                
+                                <div class="row mt-3">
+                                    <div class="col-md-6">
+                                        <h5><i class="fas fa-lightbulb text-warning"></i> Ejemplos Cotidianos</h5>
+                                        <ul class="small">
+                                            <li>Al caminar, empujamos el suelo hacia atrás y el suelo nos empuja hacia adelante</li>
+                                            <li>Los cohetes expulsan gases hacia abajo, lo que los impulsa hacia arriba</li>
+                                            <li>Un globo desinflado que se suelta vuela en dirección opuesta al aire que escapa</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h5><i class="fas fa-exclamation-triangle text-danger"></i> Conceptos Clave</h5>
+                                        <ul class="small">
+                                            <li>Las fuerzas de acción-reacción actúan sobre cuerpos diferentes</li>
+                                            <li>Nunca se anulan entre sí porque actúan sobre objetos distintos</li>
+                                            <li>Son de la misma naturaleza (ambas de contacto o ambas a distancia)</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Aplicaciones Prácticas -->
+            <div class="feature-card mt-4">
+                <h4><i class="fas fa-cogs me-2"></i>Aplicaciones de las Leyes de Newton</h4>
+                <div class="row mt-3">
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-car me-2 text-primary"></i>Seguridad Vial</h5>
+                                <p class="card-text small">Los cinturones de seguridad y airbags aplican la Primera Ley para proteger a los ocupantes durante una colisión.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-space-shuttle me-2 text-info"></i>Ingeniería Aeroespacial</h5>
+                                <p class="card-text small">El diseño de cohetes y naves espaciales se basa en la Tercera Ley para lograr el movimiento por propulsión.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-dumbbell me-2 text-success"></i>Deportes</h5>
+                                <p class="card-text small">En el fútbol, la Segunda Ley explica cómo la fuerza aplicada al balón afecta su aceleración según su masa.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pestaña de Energía -->
+        <div class="tab-pane fade" id="energia" role="tabpanel">
+            <h3 class="mb-4"><i class="fas fa-bolt me-2"></i>Energía en Mecánica</h3>
+            
+            <div class="row">
+                <!-- Energía Cinética -->
+                <div class="col-md-6 mb-4">
+                    <div class="feature-card h-100">
+                        <div class="d-flex align-items-start">
+                            <i class="fas fa-running icon text-warning"></i>
+                            <div>
+                                <h4>Energía Cinética</h4>
+                                <p class="mb-3">Es la energía que posee un cuerpo debido a su movimiento. Depende de su masa y velocidad.</p>
+                                
+                                <div class="formula">
+                                    <strong>Fórmula:</strong><br>
+                                    \( E_c = \frac{1}{2} m v^2 \)
+                                </div>
+                                
+                                <div class="mt-3">
+                                    <h5><i class="fas fa-lightbulb text-warning"></i> Ejemplo Práctico</h5>
+                                    <p class="small">Un automóvil de 1000 kg que viaja a 20 m/s tiene una energía cinética de 200,000 J.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Energía Potencial -->
+                <div class="col-md-6 mb-4">
+                    <div class="feature-card h-100">
+                        <div class="d-flex align-items-start">
+                            <i class="fas fa-mountain icon text-success"></i>
+                            <div>
+                                <h4>Energía Potencial Gravitatoria</h4>
+                                <p class="mb-3">Energía almacenada en un objeto debido a su posición en un campo gravitatorio.</p>
+                                
+                                <div class="formula">
+                                    <strong>Fórmula:</strong><br>
+                                    \( E_p = m \cdot g \cdot h \)
+                                </div>
+                                
+                                <div class="mt-3">
+                                    <h5><i class="fas fa-info-circle text-info"></i> Dato Importante</h5>
+                                    <p class="small">El valor de la gravedad (g) en la superficie terrestre es aproximadamente 9.81 m/s².</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Conservación de la Energía -->
+                <div class="col-12 mb-4">
+                    <div class="feature-card">
+                        <div class="d-flex align-items-start">
+                            <i class="fas fa-recycle icon text-primary"></i>
+                            <div>
+                                <h4>Conservación de la Energía Mecánica</h4>
+                                <p class="mb-3">En sistemas conservativos, la energía mecánica total se mantiene constante.</p>
+                                
+                                <div class="formula">
+                                    \( E_{m_i} = E_{m_f} \)<br>
+                                    \( E_{c_i} + E_{p_i} = E_{c_f} + E_{p_f} \)
+                                </div>
+                                
+                                <div class="row mt-3">
+                                    <div class="col-md-6">
+                                        <h5><i class="fas fa-lightbulb text-warning"></i> Ejemplo</h5>
+                                        <p class="small">En una montaña rusa, la suma de la energía cinética y potencial en cualquier punto del recorrido es constante (sin considerar la fricción).</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h5><i class="fas fa-exclamation-triangle text-danger"></i> Consideraciones</h5>
+                                        <ul class="small">
+                                            <li>Válido solo en sistemas conservativos</li>
+                                            <li>La fricción convierte energía mecánica en calor</li>
+                                            <li>La energía total del universo se conserva</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Aplicaciones Prácticas -->
+            <div class="feature-card mt-4">
+                <h4><i class="fas fa-cogs me-2"></i>Aplicaciones del Principio de Conservación</h4>
+                <div class="row mt-3">
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-tint me-2 text-info"></i>Centrales Hidroeléctricas</h5>
+                                <p class="card-text small">Convierten energía potencial gravitatoria del agua en energía eléctrica.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-wind me-2 text-success"></i>Energía Eólica</h5>
+                                <p class="card-text small">Transforma la energía cinética del viento en energía eléctrica.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-car me-2 text-primary"></i>Frenado Regenerativo</h5>
+                                <p class="card-text small">Los autos eléctricos recuperan energía cinética al frenar.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pestaña de Movimiento -->
+        <div class="tab-pane fade" id="movimiento" role="tabpanel">
+            <h3 class="mb-4"><i class="fas fa-running me-2"></i>Tipos de Movimiento</h3>
+            
+            <div class="row">
+                <!-- MRU -->
+                <div class="col-md-6 mb-4">
+                    <div class="feature-card h-100">
+                        <div class="d-flex align-items-start">
+                            <i class="fas fa-arrow-right icon text-primary"></i>
+                            <div>
+                                <h4>Movimiento Rectilíneo Uniforme (MRU)</h4>
+                                <p class="mb-3">Movimiento a velocidad constante en línea recta sin aceleración.</p>
+                                
+                                <div class="formula">
+                                    <strong>Posición en función del tiempo:</strong><br>
+                                    \( x(t) = x_0 + v \cdot t \)
+                                </div>
+                                
+                                <div class="mt-3">
+                                    <h5><i class="fas fa-car-side text-info"></i> Ejemplo</h5>
+                                    <p class="small">Un automóvil que viaja a 60 km/h en una carretera recta manteniendo velocidad constante.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MRUA -->
+                <div class="col-md-6 mb-4">
+                    <div class="feature-card h-100">
+                        <div class="d-flex align-items-start">
+                            <i class="fas fa-tachometer-alt icon text-danger"></i>
+                            <div>
+                                <h4>Movimiento Rectilíneo Uniformemente Acelerado (MRUA)</h4>
+                                <p class="mb-3">Movimiento con aceleración constante en línea recta.</p>
+                                
+                                <div class="formula">
+                                    <strong>Ecuaciones principales:</strong><br>
+                                    \( x(t) = x_0 + v_0 t + \frac{1}{2} a t^2 \)<br>
+                                    \( v(t) = v_0 + a t \)<br>
+                                    \( v^2 = v_0^2 + 2a\Delta x \)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Movimiento Parabólico -->
+                <div class="col-md-6 mb-4">
+                    <div class="feature-card h-100">
+                        <div class="d-flex align-items-start">
+                            <i class="fas fa-basketball-ball icon text-warning"></i>
+                            <div>
+                                <h4>Movimiento Parabólico</h4>
+                                <p class="mb-3">Combinación de MRU (horizontal) y MRUA (vertical) bajo la acción de la gravedad.</p>
+                                
+                                <div class="formula">
+                                    <strong>Características:</strong><br>
+                                    <strong>Alcance máximo:</strong> \( R = \frac{v_0^2 \sin(2\theta)}{g} \)<br>
+                                    <strong>Altura máxima:</strong> \( h_{max} = \frac{v_0^2 \sin^2(\theta)}{2g} \)<br>
+                                    <strong>Tiempo de vuelo:</strong> \( t_v = \frac{2v_0 \sin(\theta)}{g} \)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MCU -->
+                <div class="col-md-6 mb-4">
+                    <div class="feature-card h-100">
+                        <div class="d-flex align-items-start">
+                            <i class="fas fa-circle-notch icon text-success"></i>
+                            <div>
+                                <h4>Movimiento Circular Uniforme (MCU)</h4>
+                                <p class="mb-3">Movimiento con velocidad angular constante en trayectoria circular.</p>
+                                
+                                <div class="formula">
+                                    <strong>Parámetros clave:</strong><br>
+                                    <strong>Frecuencia:</strong> \( f = \frac{1}{T} \)<br>
+                                    <strong>Velocidad angular:</strong> \( \omega = 2\pi f \)<br>
+                                    <strong>Aceleración centrípeta:</strong> \( a_c = \frac{v^2}{r} = \omega^2 r \)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Aplicaciones Prácticas -->
+            <div class="feature-card mt-4">
+                <h4><i class="fas fa-cogs me-2"></i>Aplicaciones en la Vida Real</h4>
+                <div class="row mt-3">
+                    <div class="col-md-3 col-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-train fa-2x text-primary mb-2"></i>
+                                <h6 class="card-title">Transporte</h6>
+                                <p class="card-text small">MRU en trenes de alta velocidad</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-football-ball fa-2x text-success mb-2"></i>
+                                <h6 class="card-title">Deportes</h6>
+                                <p class="card-text small">Trayectorias parabólicas en el fútbol</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-satellite-dish fa-2x text-info mb-2"></i>
+                                <h6 class="card-title">Satélites</h6>
+                                <p class="card-text small">MCU en órbitas planetarias</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-car-crash fa-2x text-danger mb-2"></i>
+                                <h6 class="card-title">Seguridad Vial</h6>
+                                <p class="card-text small">Cálculo de distancias de frenado (MRUA)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Script para MathJax -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<!-- Script para inicializar las pestañas de Bootstrap -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Activar la primera pestaña por defecto
+        var firstTabEl = document.querySelector('#fisicaTabs .nav-link:first-child');
+        var firstTab = new bootstrap.Tab(firstTabEl);
+        firstTab.show();
+        
+        // Manejar clics en las pestañas
+        var tabEls = document.querySelectorAll('#fisicaTabs .nav-link');
+        tabEls.forEach(function(tabEl) {
+            tabEl.addEventListener('click', function (e) {
+                e.preventDefault();
+                var tab = new bootstrap.Tab(tabEl);
+                tab.show();
+                
+                // Actualizar la URL con el hash de la pestaña
+                var targetId = tabEl.getAttribute('data-bs-target');
+                if(targetId) {
+                    window.location.hash = targetId;
+                }
+            });
+        });
+        
+        // Verificar si hay un hash en la URL y activar la pestaña correspondiente
+        if(window.location.hash) {
+            var targetTab = document.querySelector('#fisicaTabs .nav-link[data-bs-target="' + window.location.hash + '"]');
+            if(targetTab) {
+                var tab = new bootstrap.Tab(targetTab);
+                tab.show();
+            }
+        }
+    });
+</script>
+
+<style>
+    .card {
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .card-header {
+        font-weight: 600;
+    }
+    .alert {
+        margin-bottom: 0;
+    }
+    .nav-tabs .nav-link {
+        color: #495057;
+        font-weight: 500;
+    }
+    .nav-tabs .nav-link.active {
+        font-weight: 600;
+        color: #0d6efd;
+    }
+</style>
+{% endblock %}

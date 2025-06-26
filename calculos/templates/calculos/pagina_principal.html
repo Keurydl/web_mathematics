@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Cálculos Científicos</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #F8F1E5; /* Crema claro */
+            color: #2F3131; /* Gris oscuro para texto */
+            line-height: 1.6;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
+        }
+        header {
+            background: #04202C; /* Azul oscuro */
+            color: #F8F1E5; /* Crema claro para texto de header */
+            padding: 20px 0;
+            text-align: center;
+            border-bottom: #F9BA32 3px solid; /* Acento amarillo */
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        .main-content {
+            padding: 20px;
+            background: #ffffff;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .main-content h2 {
+            color: #04202C;
+        }
+        .streamlit-link a {
+            display: inline-block;
+            background-color: #426E86; /* Azul */
+            color: #ffffff;
+            padding: 15px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+        .streamlit-link a:hover {
+            background-color: #F9BA32; /* Amarillo al pasar el mouse */
+            color: #2F3131;
+        }
+        .sections {
+            margin-top: 30px;
+        }
+        .sections ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sections li {
+            background: #C9D1C8; /* Gris claro verdoso */
+            color: #2F3131;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 1.1em;
+        }
+        .sections li .icon {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            color: #5B7065; /* Verde grisáceo */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Portal de Cálculos Científicos 🔬</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <h2>Accede a Nuestra Calculadora Interactiva</h2>
+            <p>Nuestra completa herramienta de cálculo, ofreciendo una experiencia interactiva y fácil de usar para diversas operaciones matemáticas y científicas.</p>
+            <p class="streamlit-link">
+                <a href="{{ streamlit_url }}" target="_blank">🚀 Abrir Calculadora</a>
+            </p>
+
+            <div class="sections">
+                <h2>Explora Nuestras Secciones</h2>
+                <ul>
+                    <li><a href="{% url 'calculos:matematica_avanzada' %}" class="section-link"><span class="icon">🔢</span>Matemática Avanzada</a></li>
+                    <li><a href="{% url 'calculos:fisica' %}" class="section-link"><span class="icon">🔬</span>Física</a></li>
+                    <li><a href="{% url 'calculos:quimica' %}" class="section-link"><span class="icon">🧪</span>Química</a></li>
+                    <li><a href="{% url 'calculos:aritmetica' %}" class="section-link"><span class="icon">➕</span>Aritmética</a></li>
+                    <li><a href="{% url 'calculos:algebra' %}" class="section-link"><span class="icon">🔣</span>Álgebra</a></li>
+                    <li><a href="{% url 'calculos:geometria' %}" class="section-link"><span class="icon">📐</span>Geometría</a></li>
+                    <li><a href="{% url 'calculos:calculo' %}" class="section-link"><span class="icon">📈</span>Cálculo</a></li>
+                    <li><a href="{% url 'calculos:estadistica' %}" class="section-link"><span class="icon">📊</span>Estadística</a></li>
+                    <li><a href="{% url 'calculos:topologia' %}" class="section-link"><span class="icon">🌐</span>Topología</a></li>
+                </ul>
+                <style>
+                    .section-link {
+                        display: block;
+                        color: #2F3131;
+                        text-decoration: none;
+                        padding: 15px;
+                        border-radius: 5px;
+                        transition: background-color 0.3s ease;
+                    }
+                    .section-link:hover {
+                        background-color: #B8B8A3; /* Un tono más oscuro al pasar el mouse */
+                        color: #04202C;
+                    }
+                    .sections li {
+                        padding: 0;
+                        margin-bottom: 10px;
+                        background: #C9D1C8;
+                    }
+                    .sections li:hover {
+                        background: #B8B8A3;
+                    }
+                </style>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; By:Keury Deschamps</p>
+    </footer>
+</body>
+</html>

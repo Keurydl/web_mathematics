@@ -1,0 +1,423 @@
+{% extends 'calculos/secciones/base_seccion.html' %}
+{% load static %}
+
+{% block extra_css %}
+<!-- Chart.js para gráficos interactivos -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- MathJax para fórmulas matemáticas -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<style>
+    .concept-card {
+        background: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-bottom: 20px;
+        transition: transform 0.3s ease;
+        border-left: 4px solid #4a6baf;
+    }
+    
+    .concept-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .concept-icon {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+        color: #4a6baf;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(74, 107, 175, 0.1);
+        border-radius: 10px;
+        margin: 0 auto 15px;
+    }
+    
+    .section-title {
+        color: #2c3e50;
+        margin: 40px 0 25px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #e0e0e0;
+        position: relative;
+    }
+    
+    .section-title i {
+        margin-right: 10px;
+        color: #4a6baf;
+    }
+    
+    .subsection-title {
+        color: #3498db;
+        margin-top: 30px;
+        margin-bottom: 20px;
+        font-size: 1.4rem;
+    }
+    
+    .example-box {
+        background-color: #f8f9fa;
+        border-left: 4px solid #3498db;
+        padding: 15px;
+        margin: 15px 0;
+        border-radius: 0 5px 5px 0;
+    }
+    
+    .formula {
+        background-color: #f1f8ff;
+        padding: 12px 15px;
+        border-radius: 5px;
+        font-family: 'Courier New', monospace;
+        margin: 10px 0;
+        font-size: 0.9rem;
+        border-left: 3px solid #4a6baf;
+    }
+    
+    .chart-container {
+        position: relative;
+        margin: 20px 0;
+        height: 250px;
+    }
+    
+    .feature-icon {
+        font-size: 1.5rem;
+        margin-right: 10px;
+        color: #4a6baf;
+    }
+    
+    .concept-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+    
+    .concept-header h4 {
+        margin: 0;
+        font-size: 1.3rem;
+        color: #2c3e50;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    {{ block.super }}
+    
+    <div class="container mt-4">
+        <!-- Sección de Conceptos Básicos -->
+        <h2 class="section-title">
+            <i class="fas fa-chart-pie"></i>Conceptos Básicos
+        </h2>
+        
+        <div class="row">
+            <div class="col-md-4">
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <div class="concept-header">
+                        <i class="fas fa-chart-bar feature-icon"></i>
+                        <h4>Estadística Descriptiva</h4>
+                    </div>
+                    <p>Se enfoca en describir y resumir conjuntos de datos a través de medidas numéricas y gráficas.</p>
+                    <div class="example-box">
+                        <i class="fas fa-lightbulb me-2"></i>
+                        <strong>Ejemplo:</strong> Calcular el promedio de calificaciones de un grupo de estudiantes.
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="descriptiveChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="concept-header">
+                        <i class="fas fa-chart-line feature-icon"></i>
+                        <h4>Estadística Inferencial</h4>
+                    </div>
+                    <p>Permite hacer predicciones o inferencias sobre una población basándose en muestras de datos.</p>
+                    <div class="example-box">
+                        <i class="fas fa-lightbulb me-2"></i>
+                        <strong>Ejemplo:</strong> Estimar la estatura promedio de todos los adultos en un país.
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="inferenceChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="concept-header">
+                        <i class="fas fa-database feature-icon"></i>
+                        <h4>Tipos de Datos</h4>
+                    </div>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-tag me-2"></i><strong>Cualitativos:</strong> Describen cualidades (ej. colores, géneros)</li>
+                        <li class="mt-2"><i class="fas fa-sort-numeric-up me-2"></i><strong>Cuantitativos:</strong> Se pueden medir numéricamente (ej. edad, peso)</li>
+                    </ul>
+                    <div class="chart-container mt-3">
+                        <canvas id="dataTypesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sección de Medidas de Tendencia Central -->
+        <h2 class="section-title mt-5">
+            <i class="fas fa-chart-area"></i>Medidas de Tendencia Central
+        </h2>
+        
+        <div class="row">
+            <div class="col-md-4">
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <div class="concept-header">
+                        <i class="fas fa-calculator feature-icon"></i>
+                        <h4>Media Aritmética</h4>
+                    </div>
+                    <p>Promedio de los valores en un conjunto de datos. Es la suma de todos los valores dividida entre el número de elementos.</p>
+                    <div class="formula">
+                        \[ \text{Media} = \frac{\sum_{i=1}^{n} x_i}{n} \]
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="meanChart"></canvas>
+                    </div>
+                    <div class="example-box">
+                        <i class="fas fa-calculator me-2"></i>
+                        <strong>Ejemplo:</strong> Para [5, 7, 9], Media = (5+7+9)/3 = 7
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-sort-numeric-up"></i>
+                    </div>
+                    <div class="concept-header">
+                        <i class="fas fa-sort-numeric-up feature-icon"></i>
+                        <h4>Mediana</h4>
+                    </div>
+                    <p>Valor que se encuentra en el medio cuando los datos están ordenados. Si hay un número par de observaciones, es el promedio de los dos valores centrales.</p>
+                    <div class="formula">
+                        \[ \text{Mediana} = \begin{cases}
+                        x_{(n+1)/2} & \text{si } n \text{ es impar} \\
+                        \frac{x_{n/2} + x_{n/2+1}}{2} & \text{si } n \text{ es par}
+                        \end{cases} \]
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="medianChart"></canvas>
+                    </div>
+                    <div class="example-box">
+                        <i class="fas fa-sort-amount-up me-2"></i>
+                        <strong>Ejemplo:</strong> En [1, 3, 3, 6, 7, 8, 9], la mediana es 6.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <div class="concept-header">
+                        <i class="fas fa-chart-bar feature-icon"></i>
+                        <h4>Moda</h4>
+                    </div>
+                    <p>Valor que aparece con mayor frecuencia en un conjunto de datos. Un conjunto puede tener una moda, más de una o ninguna.</p>
+                    <div class="formula">
+                        \[ \text{Moda} = \text{Valor con mayor frecuencia} \]
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="modeChart"></canvas>
+                    </div>
+                    <div class="example-box">
+                        <i class="fas fa-chart-pie me-2"></i>
+                        <strong>Ejemplos:</strong> 
+                        <ul class="mb-0 mt-2">
+                            <li>[1, 2, 2, 3] → Moda = 2</li>
+                            <li>[1, 2, 2, 3, 3] → Modas = 2 y 3</li>
+                            <li>[1, 2, 3, 4] → No hay moda</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sección de Medidas de Dispersión -->
+        <h2 class="section-title mt-5">
+            <i class="fas fa-arrows-alt-h"></i>Medidas de Dispersión
+        </h2>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-ruler-combined"></i>
+                    </div>
+                    <div class="concept-header">
+                        <i class="fas fa-ruler-combined feature-icon"></i>
+                        <h4>Rango y Rango Intercuartílico</h4>
+                    </div>
+                    <p>El rango mide la diferencia entre los valores máximo y mínimo, mientras que el rango intercuartílico (IQR) mide la dispersión del 50% central de los datos.</p>
+                    <div class="formula">
+                        \[ \text{Rango} = \text{Valor máximo} - \text{Valor mínimo} \]
+                        \[ \text{IQR} = Q_3 - Q_1 \]
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="rangeChart"></canvas>
+                    </div>
+                    <div class="example-box">
+                        <i class="fas fa-calculator me-2"></i>
+                        <strong>Ejemplo:</strong> Para [1, 2, 4, 7, 9], Rango = 9-1 = 8
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="concept-header">
+                        <i class="fas fa-chart-line feature-icon"></i>
+                        <h4>Varianza y Desviación Estándar</h4>
+                    </div>
+                    <p>La varianza mide la dispersión promedio de los datos respecto a la media, y la desviación estándar es su raíz cuadrada, expresada en las mismas unidades que los datos.</p>
+                    <div class="formula">
+                        \[ \sigma^2 = \frac{\sum (x_i - \mu)^2}{N} \]
+                        \[ \sigma = \sqrt{\sigma^2} \]
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="varianceChart"></canvas>
+                    </div>
+                    <div class="example-box">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <strong>Interpretación:</strong> Una desviación estándar mayor indica mayor dispersión de los datos.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <div class="concept-header">
+                        <i class="fas fa-percentage feature-icon"></i>
+                        <h4>Coeficiente de Variación</h4>
+                    </div>
+                    <p>Mide la variabilidad relativa de los datos en relación con la media, expresado como porcentaje. Útil para comparar la dispersión entre conjuntos de datos con diferentes unidades o medias.</p>
+                    <div class="formula">
+                        \[ CV = \left(\frac{\sigma}{\mu}\right) \times 100\% \]
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="cvChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <div class="concept-header">
+                        <i class="fas fa-box feature-icon"></i>
+                        <h4>Diagrama de Caja (Boxplot)</h4>
+                    </div>
+                    <p>Representación gráfica que muestra la distribución de los datos a través de sus cuartiles, destacando valores atípicos.</p>
+                    <div class="chart-container">
+                        <canvas id="boxplotChart"></canvas>
+                    </div>
+                    <div class="example-box">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <strong>Elementos clave:</strong> Mínimo, Q1, Mediana, Q3, Máximo y valores atípicos.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sección de Distribuciones de Probabilidad -->
+        <h2 class="section-title mt-5">
+            <i class="fas fa-chart-bell-curve me-2"></i>Distribuciones de Probabilidad
+        </h2>
+        
+        <div class="row">
+            <div class="col-md-4">
+                <div class="concept-card">
+                    <h4><i class="fas fa-bell me-2"></i>Distribución Normal</h4>
+                    <p>También conocida como campana de Gauss, simétrica alrededor de la media.</p>
+                    <div class="formula">
+                        f(x) = (1/σ√2π) * e^(-(x-μ)²/(2σ²))
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="concept-card">
+                    <h4><i class="fas fa-chart-bar me-2"></i>Distribución Binomial</h4>
+                    <p>Modela el número de éxitos en una secuencia de ensayos independientes.</p>
+                    <div class="formula">
+                        P(X=k) = C(n,k) * pᵏ * (1-p)ⁿ⁻ᵏ
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="concept-card">
+                    <h4><i class="fas fa-chart-line me-2"></i>Distribución de Poisson</h4>
+                    <p>Describe la probabilidad de que ocurra un número de eventos en un intervalo fijo.</p>
+                    <div class="formula">
+                        P(k;λ) = (e⁻ᵞ * λᵏ) / k!
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sección de Inferencia Estadística -->
+        <h2 class="section-title mt-5">
+            <i class="fas fa-search-plus me-2"></i>Inferencia Estadística
+        </h2>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="concept-card">
+                    <h4><i class="fas fa-ruler-combined me-2"></i>Intervalos de Confianza</h4>
+                    <p>Rango de valores que probablemente contenga el parámetro poblacional.</p>
+                    <div class="formula">
+                        IC = x̄ ± Z * (σ/√n)
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="concept-card">
+                    <h4><i class="fas fa-hyphen me-2"></i>Pruebas de Hipótesis</h4>
+                    <p>Método para probar afirmaciones sobre parámetros poblacionales.</p>
+                    <div class="example-box">
+                        <strong>Ejemplo:</strong> Prueba t para comparar medias de dos grupos.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'calculos/secciones/estadistica.js' %}"></script>
+{% endblock %}

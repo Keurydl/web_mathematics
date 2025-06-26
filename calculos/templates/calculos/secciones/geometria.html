@@ -1,0 +1,499 @@
+{% extends 'calculos/secciones/base_seccion.html' %}
+{% load static %}
+
+{% block extra_css %}
+<style>
+    /* Estilos específicos para la sección de Geometría */
+    .feature-card {
+        background: white;
+        border-radius: 10px;
+        padding: 25px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-left: 5px solid #4a8f3c;
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .feature-card h3 {
+        color: #2c3e50;
+        margin-bottom: 15px;
+        font-weight: 600;
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 10px;
+    }
+    
+    .feature-card .icon {
+        font-size: 2.5rem;
+        margin-right: 20px;
+        color: #4a8f3c;
+        min-width: 60px;
+        text-align: center;
+    }
+    
+    .property-card {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 15px;
+        margin: 15px 0;
+        border-left: 3px solid #4a8f3c;
+    }
+    
+    .example-box {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 15px;
+        margin: 15px 0;
+        border-left: 3px solid #28a745;
+    }
+    
+    .example-box-sm {
+        background: #f8f9fa;
+        border-radius: 6px;
+        padding: 10px;
+        margin: 10px 0;
+        font-size: 0.9em;
+    }
+    
+    .formula {
+        background: #f8f9fa;
+        border-radius: 6px;
+        padding: 10px 15px;
+        font-family: 'Courier New', monospace;
+        font-size: 1.1em;
+        margin: 10px 0;
+        display: inline-block;
+    }
+    
+    .paso-solucion {
+        margin: 10px 0;
+        padding: 10px;
+        background: #f8f9fa;
+        border-radius: 6px;
+        border-left: 3px solid #17a2b8;
+    }
+    
+    .paso-numero {
+        font-weight: bold;
+        color: #4a8f3c;
+        margin-right: 10px;
+    }
+    
+    .ejercicio {
+        margin: 20px 0;
+        padding: 15px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        background: #fff;
+    }
+    
+    .ejercicio:hover {
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .solucion {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s ease;
+    }
+    
+    .solucion.mostrar {
+        max-height: 1000px;
+    }
+    
+    .geometria-figura {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 15px auto;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    @media (max-width: 768px) {
+        .feature-card {
+            padding: 15px;
+        }
+        .feature-card .icon {
+            font-size: 2rem;
+            margin-right: 15px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+{{ block.super }}
+
+<div class="container mt-4">
+    <!-- Introducción a la Geometría -->
+    <div class="d-flex align-items-start feature-card">
+        <i class="fas fa-shapes icon"></i>
+        <div>
+            <h3>Introducción a la Geometría</h3>
+            <p>La geometría es una rama de las matemáticas que estudia las propiedades y las relaciones de las figuras en el plano y en el espacio. Desde las formas más simples hasta las más complejas, la geometría nos ayuda a comprender el mundo que nos rodea.</p>
+            
+            <div class="property-card">
+                <h5><i class="fas fa-lightbulb text-warning"></i> ¿Por qué es importante la geometría?</h5>
+                <ul>
+                    <li>Desarrolla el razonamiento espacial y la visualización</li>
+                    <li>Es fundamental en arquitectura, ingeniería, arte y diseño</li>
+                    <li>Mejora la capacidad de resolución de problemas</li>
+                    <li>Es la base para entender conceptos matemáticos avanzados</li>
+                </ul>
+            </div>
+            
+            <div class="example-box">
+                <h5><i class="fas fa-ruler-combined"></i> Conceptos básicos</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul>
+                            <li><strong>Punto:</strong> No tiene dimensiones, solo posición</li>
+                            <li><strong>Recta:</strong> Extensión infinita en una dirección</li>
+                            <li><strong>Plano:</strong> Superficie plana que se extiende infinitamente</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <img src="{% static 'images/geometria/figuras_planas/punto_recta_plano.png' %}" alt="Punto, recta y plano" class="geometria-figura" style="max-width: 250px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Figuras Planas -->
+    <div class="d-flex align-items-start feature-card">
+        <i class="fas fa-draw-polygon icon"></i>
+        <div>
+            <h3>Figuras Planas</h3>
+            <p>Las figuras planas son aquellas que tienen dos dimensiones: largo y ancho. Se encuentran en un solo plano y no tienen volumen.</p>
+            
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="property-card">
+                        <h5>Triángulos</h5>
+                        <p>Figura de tres lados y tres ángulos. Los triángulos se clasifican según sus lados y ángulos.</p>
+                        <img src="{% static 'images/geometria/figuras_planas/tipos_triangulos.jpg' %}" alt="Tipos de triángulos" class="geometria-figura">
+                        <p class="mt-2"><strong>Área:</strong> (base × altura) / 2</p>
+                        <p><strong>Perímetro:</strong> suma de sus lados</p>
+                        <p class="small text-muted mt-2">Tipos de triángulos según sus lados: equilátero, isósceles, escaleno.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="property-card">
+                        <h5>Cuadriláteros</h5>
+                        <p>Figura de cuatro lados. Se clasifican en paralelogramos, trapecios y trapezoides.</p>
+                        <img src="{% static 'images/geometria/figuras_planas/tipos_de_cuadrilateros.jpg' %}" alt="Tipos de cuadriláteros" class="geometria-figura">
+                        <p class="mt-2"><strong>Área:</strong> varía según el tipo (base × altura para paralelogramos)</p>
+                        <p><strong>Perímetro:</strong> suma de sus lados</p>
+                        <p class="small text-muted mt-2">Incluye cuadrados, rectángulos, rombos, romboides, etc.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="property-card">
+                        <h5>Círculos</h5>
+                        <p>Conjunto de puntos a igual distancia del centro. Elementos principales:</p>
+                        <img src="{% static 'images/geometria/figuras_planas/elementos_circulo.png' %}" alt="Elementos del círculo" class="geometria-figura">
+                        <p class="mt-2"><strong>Área:</strong> π × r²</p>
+                        <p><strong>Circunferencia:</strong> 2 × π × r</p>
+                        <p class="small text-muted mt-2">Radio, diámetro, cuerda, arco, sector y segmento circular.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Cuerpos Geométricos -->
+    <div class="d-flex align-items-start feature-card">
+        <i class="fas fa-cube icon"></i>
+        <div>
+            <h3>Cuerpos Geométricos</h3>
+            <p>Los cuerpos geométricos son figuras tridimensionales que ocupan un lugar en el espacio, por lo que tienen volumen. Se clasifican principalmente en poliedros y cuerpos redondos.</p>
+            
+            <!-- Imagen general de cuerpos geométricos -->
+            <div class="text-center mb-4">
+                <img src="{% static 'images/geometria/cuerpos_geometricos/cuerpos_geometricos.jpg' %}" alt="Diferentes tipos de cuerpos geométricos" class="img-fluid rounded" style="max-height: 200px; width: auto;">
+                <p class="text-muted small mt-2">Diferentes tipos de cuerpos geométricos</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="property-card">
+                        <h5>Poliedros</h5>
+                        <p>Cuerpos limitados por caras planas (polígonos). Tienen caras, aristas y vértices.</p>
+                        <div class="row">
+                            <div class="col-6 text-center mb-3">
+                                <img src="{% static 'images/geometria/cuerpos_geometricos/cubo.jpg' %}" alt="Cubo" class="geometria-figura img-thumbnail">
+                                <p class="mt-2"><strong>Cubo</strong></p>
+                                <p class="small">6 caras cuadradas iguales<br>12 aristas<br>8 vértices</p>
+                                <p class="formula">V = a³</p>
+                            </div>
+                            <div class="col-6 text-center mb-3">
+                                <img src="{% static 'images/geometria/cuerpos_geometricos/piramide.png' %}" alt="Pirámide" class="geometria-figura img-thumbnail">
+                                <p class="mt-2"><strong>Pirámide</strong></p>
+                                <p class="small">Base poligonal<br>Caras triangulares<br>1 vértice común</p>
+                                <p class="formula">V = (A_base × h) / 3</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="property-card">
+                        <h5>Cuerpos Redondos</h5>
+                        <p>Superficies curvas o mixtas generadas por el giro de una figura plana alrededor de un eje.</p>
+                        <div class="row">
+                            <div class="col-6 text-center mb-3">
+                                <img src="{% static 'images/geometria/cuerpos_geometricos/esfera.jpg' %}" alt="Esfera" class="geometria-figura img-thumbnail">
+                                <p class="mt-2"><strong>Esfera</strong></p>
+                                <p class="small">Superficie curva continua<br>Sin aristas ni vértices<br>Radio constante</p>
+                                <p class="formula">V = (4/3)πr³</p>
+                            </div>
+                            <div class="col-6 text-center mb-3">
+                                <img src="{% static 'images/geometria/cuerpos_geometricos/cilindro.jpg' %}" alt="Cilindro" class="geometria-figura img-thumbnail">
+                                <p class="mt-2"><strong>Cilindro</strong></p>
+                                <p class="small">2 bases circulares<br>Superficie lateral curva<br>Altura constante</p>
+                                <p class="formula">V = πr²h</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Geometría Analítica -->
+    <div class="d-flex align-items-start feature-card">
+        <i class="fas fa-chart-line icon"></i>
+        <div>
+            <h3>Geometría Analítica</h3>
+            <p>Estudia las figuras geométricas mediante un sistema de coordenadas y métodos algebraicos. Combina el álgebra y la geometría para resolver problemas geométricos de manera analítica.</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="property-card">
+                        <h5><i class="fas fa-drafting-compass"></i> Plano Cartesiano</h5>
+                        <img src="{% static 'images/geometria/figuras_planas/plano_cartesiano.png' %}" alt="Plano cartesiano" class="geometria-figura img-thumbnail">
+                        <p class="mt-2">Sistema de coordenadas formado por dos rectas perpendiculares (ejes X e Y) que se cortan en el origen (0,0). Permite representar puntos, rectas y figuras mediante ecuaciones algebraicas.</p>
+                        
+                        <div class="example-box-sm">
+                            <p class="mb-1"><strong>Ejemplo de coordenadas:</strong></p>
+                            <ul class="mb-0">
+                                <li>Punto A: (3, 2) - 3 unidades a la derecha, 2 arriba</li>
+                                <li>Punto B: (-1, -4) - 1 unidad a la izquierda, 4 abajo</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="property-card">
+                        <h5><i class="fas fa-square-root-alt"></i> Fórmulas Importantes</h5>
+                        <div class="formula-box">
+                            <p class="mb-2"><strong>Distancia entre dos puntos:</strong></p>
+                            <div class="formula">d = √[(x₂ - x₁)² + (y₂ - y₁)²]</div>
+                            <p class="small text-muted mt-1">Ejemplo: Distancia entre (1,2) y (4,6) = 5 unidades</p>
+                        </div>
+                        
+                        <div class="formula-box mt-3">
+                            <p class="mb-2"><strong>Punto medio:</strong></p>
+                            <div class="formula">M = ((x₁ + x₂)/2, (y₁ + y₂)/2)</div>
+                            <p class="small text-muted mt-1">Ejemplo: Punto medio entre (2,3) y (6,9) = (4,6)</p>
+                        </div>
+                        
+                        <div class="formula-box mt-3">
+                            <p class="mb-2"><strong>Pendiente de una recta:</strong></p>
+                            <div class="formula">m = (y₂ - y₁) / (x₂ - x₁)</div>
+                            <p class="small text-muted mt-1">Indica la inclinación de la recta. Positiva si sube, negativa si baja.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sección de Gráficas Básicas -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="property-card">
+                        <h5><i class="fas fa-project-diagram"></i> Gráficas Básicas</h5>
+                        <div class="row">
+                            <div class="col-md-4 text-center">
+                                <div class="geometric-shape">
+                                    <div class="graph-line" style="height: 50px; background: linear-gradient(to right, #4a8f3c, #4a8f3c);"></div>
+                                </div>
+                                <p class="mt-2"><strong>Recta</strong><br>y = mx + b</p>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <div class="geometric-shape">
+                                    <div class="graph-curve" style="height: 50px; background: radial-gradient(ellipse at center, #4a8f3c 0%, rgba(74,143,60,0) 70%);"></div>
+                                </div>
+                                <p class="mt-2"><strong>Parábola</strong><br>y = ax² + bx + c</p>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <div class="geometric-shape">
+                                    <div class="graph-sine" style="height: 50px; background: repeating-linear-gradient(90deg, #4a8f3c, #4a8f3c 10px, transparent 10px, transparent 20px);"></div>
+                                </div>
+                                <p class="mt-2"><strong>Función Periódica</strong><br>y = sen(x) o y = cos(x)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Ejercicios Prácticos -->
+    <div class="d-flex align-items-start feature-card">
+        <i class="fas fa-tasks icon"></i>
+        <div>
+            <h3>Ejercicios Prácticos</h3>
+            <p>Practica lo aprendido con estos ejercicios. Intenta resolverlos por tu cuenta antes de ver las soluciones.</p>
+            
+            <div class="ejercicio">
+                <h5>Ejercicio 1: Área de un triángulo</h5>
+                <p>Calcula el área de un triángulo con base de 8 cm y altura de 5 cm.</p>
+                <button class="btn btn-outline-primary btn-sm mostrar-solucion" data-ejercicio="1">
+                    <i class="far fa-lightbulb"></i> Mostrar solución
+                </button>
+                <div class="solucion" id="solucion-1">
+                    <div class="paso-solucion mt-3">
+                        <span class="paso-numero">1.</span> Fórmula del área del triángulo:
+                        <div class="formula">Área = (base × altura) / 2</div>
+                    </div>
+                    <div class="paso-solucion">
+                        <span class="paso-numero">2.</span> Sustituimos los valores:
+                        <div class="formula">Área = (8 cm × 5 cm) / 2 = 40 cm² / 2 = 20 cm²</div>
+                    </div>
+                    <div class="alert alert-success mt-2">
+                        <i class="fas fa-check-circle"></i> El área del triángulo es <strong>20 cm²</strong>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ejercicio">
+                <h5>Ejercicio 2: Volumen de un cilindro</h5>
+                <p>Calcula el volumen de un cilindro con radio de 3 cm y altura de 10 cm.</p>
+                <button class="btn btn-outline-primary btn-sm mostrar-solucion" data-ejercicio="2">
+                    <i class="far fa-lightbulb"></i> Mostrar solución
+                </button>
+                <div class="solucion" id="solucion-2">
+                    <div class="paso-solucion mt-3">
+                        <span class="paso-numero">1.</span> Fórmula del volumen del cilindro:
+                        <div class="formula">V = π × r² × h</div>
+                    </div>
+                    <div class="paso-solucion">
+                        <span class="paso-numero">2.</span> Sustituimos los valores (usando π ≈ 3.1416):
+                        <div class="formula">V = 3.1416 × (3 cm)² × 10 cm</div>
+                        <div class="formula">V = 3.1416 × 9 cm² × 10 cm</div>
+                        <div class="formula">V = 282.744 cm³</div>
+                    </div>
+                    <div class="alert alert-success mt-2">
+                        <i class="fas fa-check-circle"></i> El volumen del cilindro es aproximadamente <strong>282.74 cm³</strong>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="alert alert-info mt-3">
+                <i class="fas fa-lightbulb"></i> <strong>Consejo:</strong> Recuerda siempre incluir las unidades de medida en tus respuestas y verificar que sean consistentes en todos los cálculos.
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Estilos para la sección de Geometría -->
+<style>
+    .geometria-seccion {
+        background-color: #f7f7f7;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .geometria-titulo {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    
+    .geometria-descripcion {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+    
+    .geometria-tarjeta {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+    
+    .geometria-tarjeta h5 {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    
+    .geometria-tarjeta p {
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+    
+    .geometria-imagen {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+</style>
+
+<!-- Sección de Geometría -->
+<div class="geometria-seccion">
+    <h2 class="geometria-titulo">Geometría</h2>
+    <p class="geometria-descripcion">La geometría es una rama de las matemáticas que estudia las propiedades y las relaciones de las figuras en el plano y en el espacio.</p>
+    
+    <!-- Tarjetas de Geometría -->
+    <div class="row">
+        <div class="col-md-4">
+            <div class="geometria-tarjeta">
+                <h5>Figuras Planas</h5>
+                <p>Las figuras planas son aquellas que tienen dos dimensiones: largo y ancho.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="geometria-tarjeta">
+                <h5>Cuerpos Geométricos</h5>
+                <p>Los cuerpos geométricos son figuras tridimensionales que ocupan un lugar en el espacio.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="geometria-tarjeta">
+                <h5>Geometría Analítica</h5>
+                <p>La geometría analítica estudia las figuras geométricas mediante un sistema de coordenadas y métodos algebraicos.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Mostrar/ocultar soluciones
+        document.querySelectorAll('.mostrar-solucion').forEach(boton => {
+            boton.addEventListener('click', function() {
+                const ejercicioId = this.getAttribute('data-ejercicio');
+                const solucion = document.getElementById(`solucion-${ejercicioId}`);
+                solucion.classList.toggle('mostrar');
+                
+                // Cambiar el texto del botón
+                if (solucion.classList.contains('mostrar')) {
+                    this.innerHTML = '<i class="far fa-eye-slash"></i> Ocultar solución';
+                } else {
+                    this.innerHTML = '<i class="far fa-lightbulb"></i> Mostrar solución';
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,484 @@
+{% extends 'calculos/secciones/base_seccion.html' %}
+{% load static %}
+
+{% block extra_css %}
+<style>
+    .periodic-table {
+        display: grid;
+        grid-template-columns: repeat(18, 1fr);
+        gap: 2px;
+        max-width: 1000px;
+        margin: 20px auto;
+    }
+
+    .element {
+        background: #1e88e5;
+        color: white;
+        border-radius: 4px;
+        padding: 8px 2px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        font-size: 0.7rem;
+    }
+
+    .element:hover {
+        transform: scale(1.1);
+        z-index: 1;
+        box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+
+    .element .number {
+        font-size: 0.6rem;
+        position: absolute;
+        top: 2px;
+        left: 4px;
+    }
+
+    .element .symbol {
+        font-weight: bold;
+        font-size: 1.2rem;
+        margin: 5px 0;
+        display: block;
+    }
+
+    .element .name {
+        font-size: 0.6rem;
+        opacity: 0.8;
+    }
+
+    /* Element categories */
+    .alkali-metal { background: #f44336; }
+    .alkaline-earth { background: #ff9800; }
+    .transition-metal { background: #ffeb3b; color: #000; }
+    .basic-metal { background: #4caf50; }
+    .semi-metal { background: #9c27b0; }
+    .non-metal { background: #2196f3; }
+    .halogen { background: #00bcd4; }
+    .noble-gas { background: #ff5722; }
+    .lanthanide { background: #8bc34a; color: #000; }
+    .actinide { background: #ffc107; color: #000; }
+    .unknown { background: #9e9e9e; }
+
+    /* Empty cells */
+    .empty {
+        visibility: hidden;
+    }
+
+    /* Element details panel */
+    .element-details {
+        max-width: 800px;
+        margin: 30px auto;
+        padding: 20px;
+        background: #f5f5f5;
+        border-radius: 8px;
+        display: none;
+    }
+
+    .element-details h2 {
+        margin-top: 0;
+        color: #333;
+    }
+
+    .element-details .close-btn {
+        float: right;
+        cursor: pointer;
+        font-size: 1.5rem;
+    }
+
+        .element-info {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 20px;
+    }
+
+    /* Atomic Models Section */
+    .atomic-models-container {
+        max-width: 1000px;
+        margin: 40px auto;
+        padding: 20px;
+    }
+
+    .atomic-models-container h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 2rem;
+        color: #333;
+    }
+
+    .models-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    .model-card {
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .model-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    .model-card h3 {
+        margin-top: 0;
+        color: #0d47a1; /* Azul más oscuro */
+        font-weight: 700; /* Texto más grueso */
+        font-size: 1.3rem; /* Tamaño de fuente ligeramente mayor */
+    }
+    
+    .model-card p {
+        color: #333; /* Texto más oscuro para mejor contraste */
+        font-weight: 400; /* Peso normal para el párrafo */
+        line-height: 1.5; /* Mejor espaciado entre líneas */
+    }
+
+    .model-image {
+        height: 100px;
+        width: auto;
+        margin-bottom: 15px;
+        object-fit: contain;
+    }
+
+    .info-section {
+        max-width: 1000px;
+        margin: 40px auto;
+        padding: 20px;
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    .info-section h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 2rem;
+        color: #333;
+    }
+
+    .info-section p {
+        line-height: 1.6;
+        color: #555;
+    }
+
+    .info-section ul {
+        list-style-position: inside;
+        padding-left: 0;
+    }
+
+    .info-section li {
+        margin-bottom: 10px;
+        color: #555;
+    }
+
+    @media (max-width: 1200px) {
+        .periodic-table {
+            grid-template-columns: repeat(10, 1fr);
+            max-width: 800px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .periodic-table {
+            grid-template-columns: repeat(5, 1fr);
+        }
+        
+        .element .symbol {
+            font-size: 1rem;
+        }
+        
+        .element .name, .element .number {
+            display: none;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    {{ block.super }}
+    
+    <div class="periodic-table" id="periodicTable">
+        <!-- Elements will be inserted here by JavaScript -->
+    </div>
+    
+    <div class="element-details" id="elementDetails">
+        <span class="close-btn" onclick="closeDetails()">&times;</span>
+        <div class="element-info" id="elementInfo">
+            <!-- Element details will be inserted here -->
+        </div>
+    </div>
+
+    <div class="atomic-models-container">
+        <h2>Modelos Atómicos</h2>
+        <div class="models-grid">
+            <div class="model-card">
+                <img src="{% static 'images/quimica/modelos-atomicos/modelo-dalton.jpg' %}" alt="Modelo de Dalton" class="model-image">
+                <h3>Modelo de Dalton (1808)</h3>
+                <p>Propuso que la materia está compuesta por átomos indivisibles e indestructibles, que son idénticos para un mismo elemento.</p>
+            </div>
+            <div class="model-card">
+                <img src="{% static 'images/quimica/modelos-atomicos/modelo-thomson.png' %}" alt="Modelo de Thomson" class="model-image">
+                <h3>Modelo de Thomson (1904)</h3>
+                <p>Conocido como el "budín de pasas", describió el átomo como una esfera de carga positiva con electrones (carga negativa) incrustados en ella.</p>
+            </div>
+            <div class="model-card">
+                <img src="{% static 'images/quimica/modelos-atomicos/modelo-rutherford.png' %}" alt="Modelo de Rutherford" class="model-image">
+                <h3>Modelo de Rutherford (1911)</h3>
+                <p>Determinó que el átomo tiene un núcleo central muy denso y con carga positiva, donde se concentra la masa, y los electrones giran a su alrededor.</p>
+            </div>
+            <div class="model-card">
+                <img src="{% static 'images/quimica/modelos-atomicos/modelo-bohr.png' %}" alt="Modelo de Bohr" class="model-image">
+                <h3>Modelo de Bohr (1913)</h3>
+                <p>Propuso que los electrones se mueven en órbitas circulares y cuantizadas alrededor del núcleo, con niveles de energía definidos.</p>
+            </div>
+            <div class="model-card">
+                <img src="{% static 'images/quimica/modelos-atomicos/modelo-cuantico.jpg' %}" alt="Modelo Cuántico" class="model-image">
+                <h3>Modelo Cuántico (Schrödinger, 1926)</h3>
+                <p>Describe a los electrones no en órbitas, sino en orbitales, que son regiones de probabilidad donde es más probable encontrar un electrón.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="info-section">
+        <h2>Estructura y Propiedades de la Materia</h2>
+        <p>La estructura de la materia se refiere a cómo los átomos se combinan para formar moléculas y cómo estas moléculas se organizan en diferentes estados (sólido, líquido, gas). Las propiedades de la materia, como su color, densidad, punto de fusión, etc., también son objeto de estudio en química.</p>
+        <ul>
+            <li><b>Estados de la Materia:</b> Sólido, líquido, gaseoso y plasma.</li>
+            <li><b>Propiedades Físicas:</b> Densidad, punto de fusión, punto de ebullición, solubilidad.</li>
+            <li><b>Propiedades Químicas:</b> Reactividad, toxicidad, inflamabilidad.</li>
+        </ul>
+    </div>
+
+    <div class="info-section">
+        <h2>La Química y la Energía</h2>
+        <p>La química también estudia la energía involucrada en las reacciones químicas, ya sean reacciones que liberan energía (exotérmicas) o que requieren energía para ocurrir (endotérmicas).</p>
+        <ul>
+            <li><b>Reacciones Exotérmicas:</b> Liberan energía en forma de calor (ej. combustión).</li>
+            <li><b>Reacciones Endotérmicas:</b> Absorben energía del entorno para ocurrir (ej. fotosíntesis).</li>
+            <li><b>Termodinámica Química:</b> Estudia los cambios de energía en los sistemas químicos.</li>
+        </ul>
+    </div>
+
+    <div class="info-section">
+        <h2>La Química y las Interacciones entre Sustancias</h2>
+        <p>La química analiza cómo las sustancias interactúan entre sí, como la formación de compuestos químicos, las mezclas, y la solubilidad de una sustancia en otra.</p>
+        <ul>
+            <li><b>Enlaces Químicos:</b> Iónico, covalente y metálico.</li>
+            <li><b>Mezclas:</b> Homogéneas (soluciones) y heterogéneas.</li>
+            <li><b>Solubilidad:</b> La capacidad de una sustancia (soluto) para disolverse en otra (solvente).</li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Periodic table data
+    const elements = [
+        // Row 1
+        { number: 1, symbol: 'H', name: 'Hidrógeno', category: 'non-metal', mass: '1.008', electron: '1s¹', type: 'No Metal', state: 'Gas', discoverer: 'Henry Cavendish', year: '1766' },
+        { number: 2, symbol: 'He', name: 'Helio', category: 'noble-gas', mass: '4.003', electron: '1s²', type: 'Gas Noble', state: 'Gas', discoverer: 'Pierre Janssen', year: '1868' },
+        // Empty spaces for elements 3-4
+        { empty: true }, { empty: true }, { empty: true }, { empty: true }, { empty: true }, { empty: true }, { empty: true }, { empty: true }, { empty: true }, { empty: true }, { empty: true }, { empty: true }, { empty: true }, { empty: true }, { empty: true }, { empty: true },
+        // Row 2
+        { number: 3, symbol: 'Li', name: 'Litio', category: 'alkali-metal', mass: '6.941', electron: '[He] 2s¹', type: 'Metal Alcalino', state: 'Sólido', discoverer: 'Johan August Arfwedson', year: '1817' },
+        { number: 4, symbol: 'Be', name: 'Berilio', category: 'alkaline-earth', mass: '9.012', electron: '[He] 2s²', type: 'Alcalinotérreo', state: 'Sólido', discoverer: 'Louis Nicolas Vauquelin', year: '1798' },
+        { empty: true }, { empty: true }, { empty: true }, { empty: true }, { empty: true }, { empty: true }, { empty: true }, { empty: true }, { empty: true }, { empty: true },
+        { number: 5, symbol: 'B', name: 'Boro', category: 'semi-metal', mass: '10.81', electron: '[He] 2s² 2p¹', type: 'Metaloide', state: 'Sólido', discoverer: 'Joseph Louis Gay-Lussac', year: '1808' },
+        { number: 6, symbol: 'C', name: 'Carbono', category: 'non-metal', mass: '12.01', electron: '[He] 2s² 2p²', type: 'No Metal', state: 'Sólido', discoverer: 'Antoine Lavoisier', year: '1789' },
+        { number: 7, symbol: 'N', name: 'Nitrógeno', category: 'non-metal', mass: '14.01', electron: '[He] 2s² 2p³', type: 'No Metal', state: 'Gas', discoverer: 'Daniel Rutherford', year: '1772' },
+        { number: 8, symbol: 'O', name: 'Oxígeno', category: 'non-metal', mass: '16.00', electron: '[He] 2s² 2p⁴', type: 'No Metal', state: 'Gas', discoverer: 'Joseph Priestley', year: '1774' },
+        { number: 9, symbol: 'F', name: 'Flúor', category: 'halogen', mass: '19.00', electron: '[He] 2s² 2p⁵', type: 'Halógeno', state: 'Gas', discoverer: 'Henri Moissan', year: '1886' },
+        { number: 10, symbol: 'Ne', name: 'Neón', category: 'noble-gas', mass: '20.18', electron: '[He] 2s² 2p⁶', type: 'Gas Noble', state: 'Gas', discoverer: 'William Ramsay', year: '1898' },
+        // Row 3
+        { number: 11, symbol: 'Na', name: 'Sodio', category: 'alkali-metal', mass: '22.990', electron: '[Ne] 3s¹', type: 'Metal Alcalino', state: 'Sólido', discoverer: 'Humphry Davy', year: '1807' },
+        { number: 12, symbol: 'Mg', name: 'Magnesio', category: 'alkaline-earth', mass: '24.305', electron: '[Ne] 3s²', type: 'Alcalinotérreo', state: 'Sólido', discoverer: 'Joseph Black', year: '1755' },
+        { empty: true }, { empty: true }, { empty: true }, { empty: true }, { empty: true }, { empty: true }, { empty: true }, { empty: true }, { empty: true }, { empty: true },
+        { number: 13, symbol: 'Al', name: 'Aluminio', category: 'basic-metal', mass: '26.982', electron: '[Ne] 3s² 3p¹', type: 'Metal del bloque p', state: 'Sólido', discoverer: 'Hans Christian Ørsted', year: '1825' },
+        { number: 14, symbol: 'Si', name: 'Silicio', category: 'semi-metal', mass: '28.085', electron: '[Ne] 3s² 3p²', type: 'Metaloide', state: 'Sólido', discoverer: 'Jöns Jacob Berzelius', year: '1824' },
+        { number: 15, symbol: 'P', name: 'Fósforo', category: 'non-metal', mass: '30.974', electron: '[Ne] 3s² 3p³', type: 'No Metal', state: 'Sólido', discoverer: 'Hennig Brand', year: '1669' },
+        { number: 16, symbol: 'S', name: 'Azufre', category: 'non-metal', mass: '32.06', electron: '[Ne] 3s² 3p⁴', type: 'No Metal', state: 'Sólido', discoverer: 'Conocido desde la antigüedad', year: 'Antigüedad' },
+        { number: 17, symbol: 'Cl', name: 'Cloro', category: 'halogen', mass: '35.45', electron: '[Ne] 3s² 3p⁵', type: 'Halógeno', state: 'Gas', discoverer: 'Carl Wilhelm Scheele', year: '1774' },
+        { number: 18, symbol: 'Ar', name: 'Argón', category: 'noble-gas', mass: '39.948', electron: '[Ne] 3s² 3p⁶', type: 'Gas Noble', state: 'Gas', discoverer: 'Lord Rayleigh & William Ramsay', year: '1894' },
+        // Row 4
+        { number: 19, symbol: 'K', name: 'Potasio', category: 'alkali-metal', mass: '39.098', electron: '[Ar] 4s¹', type: 'Metal Alcalino', state: 'Sólido', discoverer: 'Humphry Davy', year: '1807' },
+        { number: 20, symbol: 'Ca', name: 'Calcio', category: 'alkaline-earth', mass: '40.078', electron: '[Ar] 4s²', type: 'Alcalinotérreo', state: 'Sólido', discoverer: 'Humphry Davy', year: '1808' },
+        { number: 21, symbol: 'Sc', name: 'Escandio', category: 'transition-metal', mass: '44.956', electron: '[Ar] 3d¹ 4s²', type: 'Metal de Transición', state: 'Sólido', discoverer: 'Lars Fredrik Nilson', year: '1879' },
+        { number: 22, symbol: 'Ti', name: 'Titanio', category: 'transition-metal', mass: '47.867', electron: '[Ar] 3d² 4s²', type: 'Metal de Transición', state: 'Sólido', discoverer: 'William Gregor', year: '1791' },
+        { number: 23, symbol: 'V', name: 'Vanadio', category: 'transition-metal', mass: '50.942', electron: '[Ar] 3d³ 4s²', type: 'Metal de Transición', state: 'Sólido', discoverer: 'Andrés Manuel del Río', year: '1801' },
+        { number: 24, symbol: 'Cr', name: 'Cromo', category: 'transition-metal', mass: '51.996', electron: '[Ar] 3d⁵ 4s¹', type: 'Metal de Transición', state: 'Sólido', discoverer: 'Louis Nicolas Vauquelin', year: '1797' },
+        { number: 25, symbol: 'Mn', name: 'Manganeso', category: 'transition-metal', mass: '54.938', electron: '[Ar] 3d⁵ 4s²', type: 'Metal de Transición', state: 'Sólido', discoverer: 'Carl Wilhelm Scheele', year: '1774' },
+        { number: 26, symbol: 'Fe', name: 'Hierro', category: 'transition-metal', mass: '55.845', electron: '[Ar] 3d⁶ 4s²', type: 'Metal de Transición', state: 'Sólido', discoverer: 'Conocido desde la antigüedad', year: 'Antigüedad' },
+        { number: 27, symbol: 'Co', name: 'Cobalto', category: 'transition-metal', mass: '58.933', electron: '[Ar] 3d⁷ 4s²', type: 'Metal de Transición', state: 'Sólido', discoverer: 'Georg Brandt', year: '1735' },
+        { number: 28, symbol: 'Ni', name: 'Níquel', category: 'transition-metal', mass: '58.693', electron: '[Ar] 3d⁸ 4s²', type: 'Metal de Transición', state: 'Sólido', discoverer: 'Axel Fredrik Cronstedt', year: '1751' },
+        { number: 29, symbol: 'Cu', name: 'Cobre', category: 'transition-metal', mass: '63.546', electron: '[Ar] 3d¹⁰ 4s¹', type: 'Metal de Transición', state: 'Sólido', discoverer: 'Conocido desde la antigüedad', year: 'Antigüedad' },
+        { number: 30, symbol: 'Zn', name: 'Zinc', category: 'transition-metal', mass: '65.38', electron: '[Ar] 3d¹⁰ 4s²', type: 'Metal de Transición', state: 'Sólido', discoverer: 'Andreas Sigismund Marggraf', year: '1746' },
+        { number: 31, symbol: 'Ga', name: 'Galio', category: 'basic-metal', mass: '69.723', electron: '[Ar] 3d¹⁰ 4s² 4p¹', type: 'Metal del bloque p', state: 'Sólido', discoverer: 'Paul-Émile Lecoq de Boisbaudran', year: '1875' },
+        { number: 32, symbol: 'Ge', name: 'Germanio', category: 'semi-metal', mass: '72.630', electron: '[Ar] 3d¹⁰ 4s² 4p²', type: 'Metaloide', state: 'Sólido', discoverer: 'Clemens Winkler', year: '1886' },
+        { number: 33, symbol: 'As', name: 'Arsénico', category: 'semi-metal', mass: '74.922', electron: '[Ar] 3d¹⁰ 4s² 4p³', type: 'Metaloide', state: 'Sólido', discoverer: 'Albertus Magnus', year: '1250' },
+        { number: 34, symbol: 'Se', name: 'Selenio', category: 'non-metal', mass: '78.971', electron: '[Ar] 3d¹⁰ 4s² 4p⁴', type: 'No Metal', state: 'Sólido', discoverer: 'Jöns Jacob Berzelius', year: '1817' },
+        { number: 35, symbol: 'Br', name: 'Bromo', category: 'halogen', mass: '79.904', electron: '[Ar] 3d¹⁰ 4s² 4p⁵', type: 'Halógeno', state: 'Líquido', discoverer: 'Antoine Jérôme Balard', year: '1826' },
+        { number: 36, symbol: 'Kr', name: 'Kriptón', category: 'noble-gas', mass: '83.798', electron: '[Ar] 3d¹⁰ 4s² 4p⁶', type: 'Gas Noble', state: 'Gas', discoverer: 'William Ramsay', year: '1898' },
+        // Row 5
+        { number: 37, symbol: 'Rb', name: 'Rubidio', category: 'alkali-metal', mass: '85.468', electron: '[Kr] 5s¹', type: 'Metal Alcalino', state: 'Sólido', discoverer: 'Robert Bunsen & Gustav Kirchhoff', year: '1861' },
+        { number: 38, symbol: 'Sr', name: 'Estroncio', category: 'alkaline-earth', mass: '87.62', electron: '[Kr] 5s²', type: 'Alcalinotérreo', state: 'Sólido', discoverer: 'Adair Crawford', year: '1790' },
+        { number: 39, symbol: 'Y', name: 'Itrio', category: 'transition-metal', mass: '88.906', electron: '[Kr] 4d¹ 5s²', type: 'Metal de Transición', state: 'Sólido', discoverer: 'Johan Gadolin', year: '1794' },
+        { number: 40, symbol: 'Zr', name: 'Zirconio', category: 'transition-metal', mass: '91.224', electron: '[Kr] 4d² 5s²', type: 'Metal de Transición', state: 'Sólido', discoverer: 'Martin Heinrich Klaproth', year: '1789' },
+        { number: 41, symbol: 'Nb', name: 'Niobio', category: 'transition-metal', mass: '92.906', electron: '[Kr] 4d⁴ 5s¹', type: 'Metal de Transición', state: 'Sólido', discoverer: 'Charles Hatchett', year: '1801' },
+        { number: 42, symbol: 'Mo', name: 'Molibdeno', category: 'transition-metal', mass: '95.96', electron: '[Kr] 4d⁵ 5s¹', type: 'Metal de Transición', state: 'Sólido', discoverer: 'Carl Wilhelm Scheele', year: '1778' },
+        { number: 43, symbol: 'Tc', name: 'Tecnecio', category: 'transition-metal', mass: '(98)', electron: '[Kr] 4d⁵ 5s²', type: 'Metal de Transición', state: 'Sólido', discoverer: 'Carlo Perrier & Emilio Segrè', year: '1937' },
+        { number: 44, symbol: 'Ru', name: 'Rutenio', category: 'transition-metal', mass: '101.07', electron: '[Kr] 4d⁷ 5s¹', type: 'Metal de Transición', state: 'Sólido', discoverer: 'Karl Ernst Claus', year: '1844' },
+        { number: 45, symbol: 'Rh', name: 'Rodio', category: 'transition-metal', mass: '102.91', electron: '[Kr] 4d⁸ 5s¹', type: 'Metal de Transición', state: 'Sólido', discoverer: 'William Hyde Wollaston', year: '1803' },
+        { number: 46, symbol: 'Pd', name: 'Paladio', category: 'transition-metal', mass: '106.42', electron: '[Kr] 4d¹⁰', type: 'Metal de Transición', state: 'Sólido', discoverer: 'William Hyde Wollaston', year: '1803' },
+        { number: 47, symbol: 'Ag', name: 'Plata', category: 'transition-metal', mass: '107.87', electron: '[Kr] 4d¹⁰ 5s¹', type: 'Metal de Transición', state: 'Sólido', discoverer: 'Conocido desde la antigüedad', year: 'Antigüedad' },
+        { number: 48, symbol: 'Cd', name: 'Cadmio', category: 'transition-metal', mass: '112.41', electron: '[Kr] 4d¹⁰ 5s²', type: 'Metal de Transición', state: 'Sólido', discoverer: 'Friedrich Stromeyer', year: '1817' },
+        { number: 49, symbol: 'In', name: 'Indio', category: 'basic-metal', mass: '114.82', electron: '[Kr] 4d¹⁰ 5s² 5p¹', type: 'Metal del bloque p', state: 'Sólido', discoverer: 'Ferdinand Reich & Hieronymus Theodor Richter', year: '1863' },
+        { number: 50, symbol: 'Sn', name: 'Estaño', category: 'basic-metal', mass: '118.71', electron: '[Kr] 4d¹⁰ 5s² 5p²', type: 'Metal del bloque p', state: 'Sólido', discoverer: 'Conocido desde la antigüedad', year: 'Antigüedad' },
+        { number: 51, symbol: 'Sb', name: 'Antimonio', category: 'semi-metal', mass: '121.76', electron: '[Kr] 4d¹⁰ 5s² 5p³', type: 'Metaloide', state: 'Sólido', discoverer: 'Conocido desde la antigüedad', year: 'Antigüedad' },
+        { number: 52, symbol: 'Te', name: 'Telurio', category: 'semi-metal', mass: '127.60', electron: '[Kr] 4d¹⁰ 5s² 5p⁴', type: 'Metaloide', state: 'Sólido', discoverer: 'Franz-Joseph Müller von Reichenstein', year: '1782' },
+        { number: 53, symbol: 'I', name: 'Yodo', category: 'halogen', mass: '126.90', electron: '[Kr] 4d¹⁰ 5s² 5p⁵', type: 'Halógeno', state: 'Sólido', discoverer: 'Bernard Courtois', year: '1811' },
+        { number: 54, symbol: 'Xe', name: 'Xenón', category: 'noble-gas', mass: '131.29', electron: '[Kr] 4d¹⁰ 5s² 5p⁶', type: 'Gas Noble', state: 'Gas', discoverer: 'William Ramsay & Morris Travers', year: '1898' },
+        // Row 6
+        { number: 55, symbol: 'Cs', name: 'Cesio', category: 'alkali-metal', mass: '132.91', electron: '[Xe] 6s¹', type: 'Metal Alcalino', state: 'Sólido', discoverer: 'Robert Bunsen & Gustav Kirchhoff', year: '1860' },
+        { number: 56, symbol: 'Ba', name: 'Bario', category: 'alkaline-earth', mass: '137.33', electron: '[Xe] 6s²', type: 'Alcalinotérreo', state: 'Sólido', discoverer: 'Carl Wilhelm Scheele', year: '1774' },
+        { number: 57, symbol: 'La', name: 'Lantano', category: 'lanthanide', mass: '138.91', electron: '[Xe] 5d¹ 6s²', type: 'Lantánido', state: 'Sólido', discoverer: 'Carl Gustaf Mosander', year: '1839' },
+        { number: 58, symbol: 'Ce', name: 'Cerio', category: 'lanthanide', mass: '140.12', electron: '[Xe] 4f¹ 5d¹ 6s²', type: 'Lantánido', state: 'Sólido', discoverer: 'Martin Heinrich Klaproth', year: '1803' },
+        { number: 59, symbol: 'Pr', name: 'Praseodimio', category: 'lanthanide', mass: '140.91', electron: '[Xe] 4f³ 6s²', type: 'Lantánido', state: 'Sólido', discoverer: 'Carl Auer von Welsbach', year: '1885' },
+        { number: 60, symbol: 'Nd', name: 'Neodimio', category: 'lanthanide', mass: '144.24', electron: '[Xe] 4f⁴ 6s²', type: 'Lantánido', state: 'Sólido', discoverer: 'Carl Auer von Welsbach', year: '1885' },
+        { number: 61, symbol: 'Pm', name: 'Prometio', category: 'lanthanide', mass: '(145)', electron: '[Xe] 4f⁵ 6s²', type: 'Lantánido', state: 'Sólido', discoverer: 'Jacob A. Marinsky et al.', year: '1945' },
+        { number: 62, symbol: 'Sm', name: 'Samario', category: 'lanthanide', mass: '150.36', electron: '[Xe] 4f⁶ 6s²', type: 'Lantánido', state: 'Sólido', discoverer: 'Paul-Émile Lecoq de Boisbaudran', year: '1879' },
+        { number: 63, symbol: 'Eu', name: 'Europio', category: 'lanthanide', mass: '151.96', electron: '[Xe] 4f⁷ 6s²', type: 'Lantánido', state: 'Sólido', discoverer: 'Eugène-Anatole Demarçay', year: '1901' },
+        { number: 64, symbol: 'Gd', name: 'Gadolinio', category: 'lanthanide', mass: '157.25', electron: '[Xe] 4f⁷ 5d¹ 6s²', type: 'Lantánido', state: 'Sólido', discoverer: 'Jean Charles Galissard de Marignac', year: '1880' },
+        { number: 65, symbol: 'Tb', name: 'Terbio', category: 'lanthanide', mass: '158.93', electron: '[Xe] 4f⁹ 6s²', type: 'Lantánido', state: 'Sólido', discoverer: 'Carl Gustaf Mosander', year: '1843' },
+        { number: 66, symbol: 'Dy', name: 'Disprosio', category: 'lanthanide', mass: '162.50', electron: '[Xe] 4f¹⁰ 6s²', type: 'Lantánido', state: 'Sólido', discoverer: 'Paul-Émile Lecoq de Boisbaudran', year: '1886' },
+        { number: 67, symbol: 'Ho', name: 'Holmio', category: 'lanthanide', mass: '164.93', electron: '[Xe] 4f¹¹ 6s²', type: 'Lantánido', state: 'Sólido', discoverer: 'Jacques-Louis Soret', year: '1878' },
+        { number: 68, symbol: 'Er', name: 'Erbio', category: 'lanthanide', mass: '167.26', electron: '[Xe] 4f¹² 6s²', type: 'Lantánido', state: 'Sólido', discoverer: 'Carl Gustaf Mosander', year: '1843' },
+        { number: 69, symbol: 'Tm', name: 'Tulio', category: 'lanthanide', mass: '168.93', electron: '[Xe] 4f¹³ 6s²', type: 'Lantánido', state: 'Sólido', discoverer: 'Per Teodor Cleve', year: '1879' },
+        { number: 70, symbol: 'Yb', name: 'Iterbio', category: 'lanthanide', mass: '173.05', electron: '[Xe] 4f¹⁴ 6s²', type: 'Lantánido', state: 'Sólido', discoverer: 'Jean Charles Galissard de Marignac', year: '1878' },
+        { number: 71, symbol: 'Lu', name: 'Lutecio', category: 'lanthanide', mass: '174.97', electron: '[Xe] 4f¹⁴ 5d¹ 6s²', type: 'Lantánido', state: 'Sólido', discoverer: 'Georges Urbain', year: '1907' },
+        { number: 72, symbol: 'Hf', name: 'Hafnio', category: 'transition-metal', mass: '178.49', electron: '[Xe] 4f¹⁴ 5d² 6s²', type: 'Metal de Transición', state: 'Sólido', discoverer: 'Dirk Coster & George de Hevesy', year: '1923' },
+        { number: 73, symbol: 'Ta', name: 'Tántalo', category: 'transition-metal', mass: '180.95', electron: '[Xe] 4f¹⁴ 5d³ 6s²', type: 'Metal de Transición', state: 'Sólido', discoverer: 'Anders Gustaf Ekeberg', year: '1802' },
+        { number: 74, symbol: 'W', name: 'Wolframio', category: 'transition-metal', mass: '183.84', electron: '[Xe] 4f¹⁴ 5d⁴ 6s²', type: 'Metal de Transición', state: 'Sólido', discoverer: 'Fausto & Juan José Elhuyar', year: '1783' },
+        { number: 75, symbol: 'Re', name: 'Renio', category: 'transition-metal', mass: '186.21', electron: '[Xe] 4f¹⁴ 5d⁵ 6s²', type: 'Metal de Transición', state: 'Sólido', discoverer: 'Walter Noddack, Ida Tacke, Otto Berg', year: '1925' },
+        { number: 76, symbol: 'Os', name: 'Osmio', category: 'transition-metal', mass: '190.23', electron: '[Xe] 4f¹⁴ 5d⁶ 6s²', type: 'Metal de Transición', state: 'Sólido', discoverer: 'Smithson Tennant', year: '1803' },
+        { number: 77, symbol: 'Ir', name: 'Iridio', category: 'transition-metal', mass: '192.22', electron: '[Xe] 4f¹⁴ 5d⁷ 6s²', type: 'Metal de Transición', state: 'Sólido', discoverer: 'Smithson Tennant', year: '1803' },
+        { number: 78, symbol: 'Pt', name: 'Platino', category: 'transition-metal', mass: '195.08', electron: '[Xe] 4f¹⁴ 5d⁹ 6s¹', type: 'Metal de Transición', state: 'Sólido', discoverer: 'Antonio de Ulloa', year: '1735' },
+        { number: 79, symbol: 'Au', name: 'Oro', category: 'transition-metal', mass: '196.97', electron: '[Xe] 4f¹⁴ 5d¹⁰ 6s¹', type: 'Metal de Transición', state: 'Sólido', discoverer: 'Conocido desde la antigüedad', year: 'Antigüedad' },
+        { number: 80, symbol: 'Hg', name: 'Mercurio', category: 'transition-metal', mass: '200.59', electron: '[Xe] 4f¹⁴ 5d¹⁰ 6s²', type: 'Metal de Transición', state: 'Líquido', discoverer: 'Conocido desde la antigüedad', year: 'Antigüedad' },
+        { number: 81, symbol: 'Tl', name: 'Talio', category: 'basic-metal', mass: '204.38', electron: '[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p¹', type: 'Metal del bloque p', state: 'Sólido', discoverer: 'William Crookes', year: '1861' },
+        { number: 82, symbol: 'Pb', name: 'Plomo', category: 'basic-metal', mass: '207.2', electron: '[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p²', type: 'Metal del bloque p', state: 'Sólido', discoverer: 'Conocido desde la antigüedad', year: 'Antigüedad' },
+        { number: 83, symbol: 'Bi', name: 'Bismuto', category: 'basic-metal', mass: '208.98', electron: '[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p³', type: 'Metal del bloque p', state: 'Sólido', discoverer: 'Claude François Geoffroy', year: '1753' },
+        { number: 84, symbol: 'Po', name: 'Polonio', category: 'semi-metal', mass: '(209)', electron: '[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁴', type: 'Metaloide', state: 'Sólido', discoverer: 'Marie & Pierre Curie', year: '1898' },
+        { number: 85, symbol: 'At', name: 'Astato', category: 'halogen', mass: '(210)', electron: '[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁵', type: 'Halógeno', state: 'Sólido', discoverer: 'Dale R. Corson et al.', year: '1940' },
+        { number: 86, symbol: 'Rn', name: 'Radón', category: 'noble-gas', mass: '(222)', electron: '[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁶', type: 'Gas Noble', state: 'Gas', discoverer: 'Friedrich Ernst Dorn', year: '1900' },
+        // Row 7
+        { number: 87, symbol: 'Fr', name: 'Francio', category: 'alkali-metal', mass: '(223)', electron: '[Rn] 7s¹', type: 'Metal Alcalino', state: 'Sólido', discoverer: 'Marguerite Perey', year: '1939' },
+        { number: 88, symbol: 'Ra', name: 'Radio', category: 'alkaline-earth', mass: '(226)', electron: '[Rn] 7s²', type: 'Alcalinotérreo', state: 'Sólido', discoverer: 'Marie & Pierre Curie', year: '1898' },
+        { number: 89, symbol: 'Ac', name: 'Actinio', category: 'actinide', mass: '(227)', electron: '[Rn] 6d¹ 7s²', type: 'Actínido', state: 'Sólido', discoverer: 'André-Louis Debierne', year: '1899' },
+        { number: 90, symbol: 'Th', name: 'Torio', category: 'actinide', mass: '232.04', electron: '[Rn] 6d² 7s²', type: 'Actínido', state: 'Sólido', discoverer: 'Jöns Jacob Berzelius', year: '1828' },
+        { number: 91, symbol: 'Pa', name: 'Protactinio', category: 'actinide', mass: '231.04', electron: '[Rn] 5f² 6d¹ 7s²', type: 'Actínido', state: 'Sólido', discoverer: 'Oswald Helmuth Göhring & Kasimir Fajans', year: '1913' },
+        { number: 92, symbol: 'U', name: 'Uranio', category: 'actinide', mass: '238.03', electron: '[Rn] 5f³ 6d¹ 7s²', type: 'Actínido', state: 'Sólido', discoverer: 'Martin Heinrich Klaproth', year: '1789' },
+        { number: 93, symbol: 'Np', name: 'Neptunio', category: 'actinide', mass: '(237)', electron: '[Rn] 5f⁴ 6d¹ 7s²', type: 'Actínido', state: 'Sólido', discoverer: 'Edwin McMillan & Philip H. Abelson', year: '1940' },
+        { number: 94, symbol: 'Pu', name: 'Plutonio', category: 'actinide', mass: '(244)', electron: '[Rn] 5f⁶ 7s²', type: 'Actínido', state: 'Sólido', discoverer: 'Glenn T. Seaborg et al.', year: '1940' },
+        { number: 95, symbol: 'Am', name: 'Americio', category: 'actinide', mass: '(243)', electron: '[Rn] 5f⁷ 7s²', type: 'Actínido', state: 'Sólido', discoverer: 'Glenn T. Seaborg et al.', year: '1944' },
+        { number: 96, symbol: 'Cm', name: 'Curio', category: 'actinide', mass: '(247)', electron: '[Rn] 5f⁷ 6d¹ 7s²', type: 'Actínido', state: 'Sólido', discoverer: 'Glenn T. Seaborg et al.', year: '1944' },
+        { number: 97, symbol: 'Bk', name: 'Berkelio', category: 'actinide', mass: '(247)', electron: '[Rn] 5f⁹ 7s²', type: 'Actínido', state: 'Sólido', discoverer: 'Glenn T. Seaborg et al.', year: '1949' },
+        { number: 98, symbol: 'Cf', name: 'Californio', category: 'actinide', mass: '(251)', electron: '[Rn] 5f¹⁰ 7s²', type: 'Actínido', state: 'Sólido', discoverer: 'Glenn T. Seaborg et al.', year: '1950' },
+        { number: 99, symbol: 'Es', name: 'Einstenio', category: 'actinide', mass: '(252)', electron: '[Rn] 5f¹¹ 7s²', type: 'Actínido', state: 'Sólido', discoverer: 'Albert Ghiorso et al.', year: '1952' },
+        { number: 100, symbol: 'Fm', name: 'Fermio', category: 'actinide', mass: '(257)', electron: '[Rn] 5f¹² 7s²', type: 'Actínido', state: 'Sólido', discoverer: 'Albert Ghiorso et al.', year: '1952' },
+        { number: 101, symbol: 'Md', name: 'Mendelevio', category: 'actinide', mass: '(258)', electron: '[Rn] 5f¹³ 7s²', type: 'Actínido', state: 'Sólido', discoverer: 'Albert Ghiorso et al.', year: '1955' },
+        { number: 102, symbol: 'No', name: 'Nobelio', category: 'actinide', mass: '(259)', electron: '[Rn] 5f¹⁴ 7s²', type: 'Actínido', state: 'Sólido', discoverer: 'Georgy Flerov et al.', year: '1966' },
+        { number: 103, symbol: 'Lr', name: 'Lawrencio', category: 'actinide', mass: '(262)', electron: '[Rn] 5f¹⁴ 7s² 7p¹', type: 'Actínido', state: 'Sólido', discoverer: 'Albert Ghiorso et al.', year: '1961' },
+        { number: 104, symbol: 'Rf', name: 'Rutherfordio', category: 'transition-metal', mass: '(267)', electron: '[Rn] 5f¹⁴ 6d² 7s²', type: 'Metal de Transición', state: 'Sintético', discoverer: 'Georgy Flerov et al.', year: '1964' },
+        { number: 105, symbol: 'Db', name: 'Dubnio', category: 'transition-metal', mass: '(268)', electron: '[Rn] 5f¹⁴ 6d³ 7s²', type: 'Metal de Transición', state: 'Sintético', discoverer: 'Georgy Flerov et al.', year: '1968' },
+        { number: 106, symbol: 'Sg', name: 'Seaborgio', category: 'transition-metal', mass: '(271)', electron: '[Rn] 5f¹⁴ 6d⁴ 7s²', type: 'Metal de Transición', state: 'Sintético', discoverer: 'Albert Ghiorso et al.', year: '1974' },
+        { number: 107, symbol: 'Bh', name: 'Bohrio', category: 'transition-metal', mass: '(272)', electron: '[Rn] 5f¹⁴ 6d⁵ 7s²', type: 'Metal de Transición', state: 'Sintético', discoverer: 'Peter Armbruster & Gottfried Münzenberg et al.', year: '1976' },
+        { number: 108, symbol: 'Hs', name: 'Hasio', category: 'transition-metal', mass: '(277)', electron: '[Rn] 5f¹⁴ 6d⁶ 7s²', type: 'Metal de Transición', state: 'Sintético', discoverer: 'Peter Armbruster & Gottfried Münzenberg et al.', year: '1984' },
+        { number: 109, symbol: 'Mt', name: 'Meitnerio', category: 'unknown', mass: '(276)', electron: '[Rn] 5f¹⁴ 6d⁷ 7s²', type: 'Desconocido', state: 'Sintético', discoverer: 'Peter Armbruster & Gottfried Münzenberg et al.', year: '1982' },
+        { number: 110, symbol: 'Ds', name: 'Darmstatio', category: 'unknown', mass: '(281)', electron: '[Rn] 5f¹⁴ 6d⁹ 7s¹', type: 'Desconocido', state: 'Sintético', discoverer: 'Sigurd Hofmann et al.', year: '1994' },
+        { number: 111, symbol: 'Rg', name: 'Roentgenio', category: 'unknown', mass: '(280)', electron: '[Rn] 5f¹⁴ 6d¹⁰ 7s¹', type: 'Desconocido', state: 'Sintético', discoverer: 'Sigurd Hofmann et al.', year: '1994' },
+        { number: 112, symbol: 'Cn', name: 'Copernicio', category: 'transition-metal', mass: '(285)', electron: '[Rn] 5f¹⁴ 6d¹⁰ 7s²', type: 'Metal de Transición', state: 'Sintético', discoverer: 'Sigurd Hofmann et al.', year: '1996' },
+        { number: 113, symbol: 'Nh', name: 'Nihonio', category: 'unknown', mass: '(284)', electron: '[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p¹', type: 'Desconocido', state: 'Sintético', discoverer: 'Kosuke Morita et al.', year: '2003' },
+        { number: 114, symbol: 'Fl', name: 'Flerovio', category: 'unknown', mass: '(289)', electron: '[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p²', type: 'Desconocido', state: 'Sintético', discoverer: 'Yuri Oganessian et al.', year: '1998' },
+        { number: 115, symbol: 'Mc', name: 'Moscovio', category: 'unknown', mass: '(288)', electron: '[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p³', type: 'Desconocido', state: 'Sintético', discoverer: 'Yuri Oganessian et al.', year: '2003' },
+        { number: 116, symbol: 'Lv', name: 'Livermorio', category: 'unknown', mass: '(293)', electron: '[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁴', type: 'Desconocido', state: 'Sintético', discoverer: 'Yuri Oganessian et al.', year: '2000' },
+        { number: 117, symbol: 'Ts', name: 'Teneso', category: 'unknown', mass: '(294)', electron: '[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁵', type: 'Desconocido', state: 'Sintético', discoverer: 'Yuri Oganessian et al.', year: '2010' },
+        { number: 118, symbol: 'Og', name: 'Oganesón', category: 'unknown', mass: '(294)', electron: '[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁶', type: 'Desconocido', state: 'Sintético', discoverer: 'Yuri Oganessian et al.', year: '2002' }
+    ];
+
+    // Function to create the periodic table
+    function createPeriodicTable() {
+        const table = document.getElementById('periodicTable');
+        
+        // Create elements
+        elements.forEach(element => {
+            const div = document.createElement('div');
+            
+            if (element.empty) {
+                div.className = 'empty';
+            } else {
+                div.className = `element ${element.category}`;
+                div.innerHTML = `
+                    <span class="number">${element.number}</span>
+                    <span class="symbol">${element.symbol}</span>
+                    <span class="name">${element.name}</span>
+                `;
+                
+                // Add click event to show element details
+                div.addEventListener('click', () => showElementDetails(element));
+            }
+            
+            table.appendChild(div);
+        });
+    }
+    
+    // Function to show element details
+    function showElementDetails(element) {
+        const details = document.getElementById('elementDetails');
+        const info = document.getElementById('elementInfo');
+        
+        info.innerHTML = `
+            <div>
+                <h2>${element.name} (${element.symbol})</h2>
+                <p><strong>Número atómico:</strong> ${element.number}</p>
+                <p><strong>Masa atómica:</strong> ${element.mass} u</p>
+                <p><strong>Configuración electrónica:</strong> ${element.electron}</p>
+                <p><strong>Tipo:</strong> ${element.type}</p>
+                <p><strong>Estado a 25°C:</strong> ${element.state}</p>
+            </div>
+            <div>
+                <p><strong>Descubridor:</strong> ${element.discoverer}</p>
+                <p><strong>Año de descubrimiento:</strong> ${element.year}</p>
+                <p><strong>Grupo:</strong> ${element.category}</p>
+                <!-- Add more element properties as needed -->
+            </div>
+        `;
+        
+        details.style.display = 'block';
+    }
+    
+    // Function to close element details
+    function closeDetails() {
+        document.getElementById('elementDetails').style.display = 'none';
+    }
+    
+    // Initialize the periodic table when the page loads
+    document.addEventListener('DOMContentLoaded', createPeriodicTable);
+    
+    // Close details when clicking outside
+    window.onclick = function(event) {
+        const details = document.getElementById('elementDetails');
+        if (event.target == details) {
+            closeDetails();
+        }
+    }
+</script>
+{% endblock %}

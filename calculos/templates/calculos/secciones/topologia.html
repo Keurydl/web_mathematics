@@ -1,0 +1,688 @@
+{% extends 'calculos/secciones/base_seccion.html' %}
+
+{% block content %}
+    {{ block.super }}
+
+    <!-- Font Awesome CDN para los iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        .feature-card {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .feature-card h3 {
+            font-size: 1.5rem;
+            color: #343a40;
+        }
+        .feature-card .icon {
+            font-size: 2.5rem;
+            color: #007bff;
+            margin-right: 15px;
+        }
+        .math-formula {
+            background-color: #f1f3f5;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+        .example-box {
+            background-color: white;
+            border-left: 4px solid #007bff;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        .exercise-box {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .solution {
+            display: none;
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #e8f4fd;
+            border-radius: 5px;
+            border-left: 4px solid #17a2b8;
+        }
+    </style>
+
+    <div class="container mt-4">
+        <!-- Sección de Introducción -->
+        <div class="d-flex align-items-start feature-card">
+            <i class="fas fa-project-diagram icon"></i>
+            <div>
+                <h3>Introducción a la Topología</h3>
+                <p>La topología es una rama de las matemáticas que estudia las propiedades de los espacios que se preservan bajo transformaciones continuas, como el estiramiento y la torsión, pero no el desgarro o el pegado.</p>
+            
+                <div class="row mt-4">
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-start mb-3">
+                            <i class="fas fa-atom text-primary me-2"></i>
+                            <div>
+                                <h5 class="mb-1">Conceptos Básicos</h5>
+                                <p class="text-muted mb-0">Estudio de espacios topológicos, conjuntos abiertos y cerrados, bases, continuidad y homeomorfismos.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-start mb-3">
+                            <i class="fas fa-history text-primary me-2"></i>
+                            <div>
+                                <h5 class="mb-1">Breve Historia</h5>
+                                <p class="text-muted mb-0">Desde los trabajos de Euler sobre los puentes de Königsberg hasta el desarrollo formal en el siglo XX.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-start mb-3">
+                            <i class="fas fa-sitemap text-primary me-2"></i>
+                            <div>
+                                <h5 class="mb-1">Relación con Otras Áreas</h5>
+                                <p class="text-muted mb-0">Conectada con análisis, geometría, álgebra, física teórica y ciencias de la computación.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Espacios Topológicos -->
+        <div class="d-flex align-items-start feature-card">
+            <i class="fas fa-cube icon"></i>
+            <div>
+                <h3>Espacios Topológicos</h3>
+                <p>Un espacio topológico es un par (X, τ) donde X es un conjunto y τ es una colección de subconjuntos de X que satisface ciertos axiomas.</p>
+                
+                <div class="row mt-4">
+                    <div class="col-md-4">
+                        <div class="example-box">
+                            <h5><i class="fas fa-cube text-primary"></i> Espacio Discreto</h5>
+                            <p>Todos los subconjuntos son abiertos. τ = P(X)</p>
+                            <div class="math-formula">
+                                ∀A ⊆ X, A ∈ τ
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="example-box">
+                            <h5><i class="fas fa-square text-primary"></i> Espacio Indiscreto</h5>
+                            <p>Solo el vacío y el total son abiertos. τ = {∅, X}</p>
+                            <div class="math-formula">
+                                τ = {∅, X}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="example-box">
+                            <h5><i class="fas fa-ruler text-primary"></i> Espacio Métrico</h5>
+                            <p>Topología inducida por una métrica d</p>
+                            <div class="math-formula">
+                                B(x, r) = {y ∈ X | d(x,y) < r}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+        <!-- Conjuntos Abiertos y Cerrados -->
+        <div class="d-flex align-items-start feature-card">
+            <i class="fas fa-door-open icon"></i>
+            <div>
+                <h3>Conjuntos Abiertos y Cerrados</h3>
+                <p>Conceptos fundamentales en topología que definen la estructura de un espacio topológico.</p>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="example-box">
+                            <h5><i class="fas fa-door-open text-primary"></i> Conjuntos Abiertos</h5>
+                            <p>Un subconjunto U de X es abierto si U ∈ τ. Los conjuntos abiertos satisfacen:</p>
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> X y ∅ son abiertos</li>
+                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> La unión arbitraria de abiertos es abierta</li>
+                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> La intersección finita de abiertos es abierta</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="example-box">
+                            <h5><i class="fas fa-door-closed text-primary"></i> Conjuntos Cerrados</h5>
+                            <p>Un subconjunto F de X es cerrado si su complemento X\F es abierto.</p>
+                            <div class="math-formula">
+                                F es cerrado ⇔ X\F es abierto
+                            </div>
+                            <div class="mt-3">
+                                <h6>Propiedades:</h6>
+                                <ul class="list-unstyled">
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> X y ∅ son cerrados</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> La intersección arbitraria de cerrados es cerrada</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> La unión finita de cerrados es cerrada</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="example-box">
+                            <h5><i class="fas fa-compress-arrows-alt text-primary"></i> Compacidad</h5>
+                            <p>Un espacio es compacto si todo cubrimiento abierto tiene un subcubrimiento finito.</p>
+                            <div class="math-formula">
+                                X compacto ⇔ ∀{Uᵢ} cubrimiento abierto, ∃U₁,...,Uₙ: X = ∪₁ⁿ Uᵢ
+                            </div>
+                            <div class="mt-3">
+                                <h6>Teoremas clave:</h6>
+                                <ul class="list-unstyled">
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Heine-Borel: En ℝⁿ, compacto = cerrado y acotado</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Tychonoff: Producto de compactos es compacto</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Imagen continua de compacto es compacta</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="example-box">
+                            <h5><i class="fas fa-ruler-combined text-primary"></i> Axiomas de Separación</h5>
+                            <p>Propiedades que garantizan la capacidad de separar puntos y conjuntos.</p>
+                            <div class="table-responsive">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Axioma</th>
+                                            <th>Descripción</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>T₀ (Kolmogórov)</td>
+                                            <td>Puntos topológicamente distinguibles</td>
+                                        </tr>
+                                        <tr>
+                                            <td>T₁ (Fréchet)</td>
+                                            <td>Puntos son cerrados</td>
+                                        </tr>
+                                        <tr>
+                                            <td>T₂ (Hausdorff)</td>
+                                            <td>Puntos separables por entornos</td>
+                                        </tr>
+                                        <tr>
+                                            <td>T₃ (Regular)</td>
+                                            <td>Cerrados y puntos fuera separables</td>
+                                        </tr>
+                                        <tr>
+                                            <td>T₄ (Normal)</td>
+                                            <td>Cerrados disjuntos separables</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-database"></i> Análisis de Datos</h5>
+                            <p class="card-text">Análisis topológico de datos (TDA) para identificar patrones y estructuras.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-desktop"></i> Gráficos por Computadora</h5>
+                            <p class="card-text">Modelado 3D, superficies y mallas poligonales.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-atom"></i> Física Teórica</h5>
+                            <p class="card-text">Teoría de cuerdas, gravedad cuántica, cosmología.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-laptop-code"></i> Ciencias de la Computación</h5>
+                            <p class="card-text">Tipos de datos algebraicos, semántica denotacional.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ejercicios Interactivos -->
+        <div class="feature-card mt-4">
+            <h3>Ejercicios Interactivos</h3>
+            
+            <div class="row">
+                <div class="col-12">
+                    <div class="exercise-box">
+                        <h5><i class="fas fa-check-square"></i> Identificar Conjuntos</h5>
+                        <p>¿Cuál de los siguientes conjuntos es abierto en ℝ con la topología usual?</p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="abierto" id="opcion1" value="[0,1]">
+                            <label class="form-check-label" for="opcion1">[0,1]</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="abierto" id="opcion2" value="(0,1)">
+                            <label class="form-check-label" for="opcion2">(0,1)</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="abierto" id="opcion3" value="ℚ">
+                            <label class="form-check-label" for="opcion3">ℚ</label>
+                        </div>
+                        <button class="btn btn-sm btn-outline-primary mt-2 check-answer" data-correct="(0,1)">
+                            <i class="fas fa-check-circle me-1"></i>Verificar
+                        </button>
+                        <div class="feedback mt-2">
+                            <div class="alert alert-info p-2 small">
+                                <i class="fas fa-info-circle me-1"></i>Recuerda que en la topología usual de ℝ, un conjunto es abierto si para cada punto del conjunto existe un intervalo abierto que lo contiene y está contenido en el conjunto.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Topologías Especiales -->
+        <div class="d-flex align-items-start feature-card">
+            <i class="fas fa-project-diagram icon"></i>
+            <div>
+                <h3>Topologías Especiales</h3>
+                <p>Construcciones fundamentales que generan nuevos espacios topológicos a partir de espacios conocidos.</p>
+                
+                <div class="row mt-4">
+                    <div class="col-md-4">
+                        <div class="example-box">
+                            <h5><i class="fas fa-th text-primary"></i> Topología Producto</h5>
+                            <p>En el producto cartesiano de espacios topológicos {(Xᵢ, τᵢ)}ᵢ∈I, la topología producto es la más gruesa que hace continuas las proyecciones.</p>
+                            <div class="math-formula">
+                                τ = {∏Uᵢ | Uᵢ ∈ τᵢ, Uᵢ = Xᵢ para casi todo i}
+                            </div>
+                            <div class="mt-3">
+                                <h6>Propiedades:</h6>
+                                <ul class="list-unstyled">
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Las proyecciones πᵢ: ∏Xᵢ → Xᵢ son continuas y abiertas</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Producto de T₂ es T₂</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Producto de conexos es conexo (Teorema de Tychonoff)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="example-box">
+                            <h5><i class="fas fa-code-branch text-primary"></i> Topología Cociente</h5>
+                            <p>Dada una relación de equivalencia ∼ en X, la topología cociente en X/∼ es la más fina que hace continua la proyección canónica.</p>
+                            <div class="math-formula">
+                                τ_Y = {V ⊆ Y | π⁻¹(V) ∈ τ_X}
+                            </div>
+                            <div class="mt-3">
+                                <h6>Aplicaciones:</h6>
+                                <ul class="list-unstyled">
+                                    <li class="mb-2"><i class="fas fa-arrow-right text-info me-2"></i>Construcción del círculo S¹ = [0,1]/∼</li>
+                                    <li class="mb-2"><i class="fas fa-arrow-right text-info me-2"></i>Banda de Möbius</li>
+                                    <li class="mb-2"><i class="fas fa-arrow-right text-info me-2"></i>Espacios proyectivos</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="example-box">
+                            <h5><i class="fas fa-indent text-primary"></i> Topología Subespacio</h5>
+                            <p>Dado (X, τ) y A ⊆ X, la topología de subespacio en A hereda la estructura de X.</p>
+                            <div class="math-formula">
+                                τ_A = {A ∩ U | U ∈ τ}
+                            </div>
+                            <div class="mt-3">
+                                <h6>Propiedades:</h6>
+                                <ul class="list-unstyled">
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> La inclusión i: A ↔ X es continua</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Subespacio de Tᵢ es Tᵢ (i=0,1,2,3,4)</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Subespacio cerrado de compacto es compacto</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="example-box">
+                            <h5><i class="fas fa-sitemap text-primary"></i> Topologías Inicial y Final</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="p-3 bg-light rounded h-100">
+                                        <h6><i class="fas fa-arrow-down text-primary me-2"></i>Topología Inicial</h6>
+                                        <p class="small">La menos fina que hace continuas ciertas funciones fᵢ: X → Yᵢ.</p>
+                                        <div class="math-formula">
+                                            τ = {∩fᵢ⁻¹(Uᵢ) | Uᵢ ∈ τᵢ}
+                                        </div>
+                                        <div class="mt-2">
+                                            <p class="small mb-1"><strong>Ejemplos:</strong></p>
+                                            <ul class="list-unstyled small">
+                                                <li><i class="fas fa-caret-right text-info me-2"></i>Topología producto</li>
+                                                <li><i class="fas fa-caret-right text-info me-2"></i>Topología de subespacio</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="p-3 bg-light rounded h-100">
+                                        <h6><i class="fas fa-arrow-up text-primary me-2"></i>Topología Final</h6>
+                                        <p class="small">La más fina que hace continuas ciertas funciones fᵢ: Yᵢ → X.</p>
+                                        <div class="math-formula">
+                                            τ = {U ⊆ X | fᵢ⁻¹(U) ∈ τᵢ ∀i}
+                                        </div>
+                                        <div class="mt-2">
+                                            <p class="small mb-1"><strong>Ejemplos:</strong></p>
+                                            <ul class="list-unstyled small">
+                                                <li><i class="fas fa-caret-right text-info me-2"></i>Topología cociente</li>
+                                                <li><i class="fas fa-caret-right text-info me-2"></i>Topología suma directa</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <style>
+        /* Estilos específicos para la sección de topología */
+        .topology-diagram {
+            display: none; /* Ocultar el diagrama ya que la sección se eliminó */
+        }
+
+        .topology-diagram:hover {
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .point {
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            background-color: #4a6baf;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            z-index: 10;
+        }
+
+        .point:hover {
+            transform: translate(-50%, -50%) scale(1.3);
+            box-shadow: 0 0 0 3px rgba(74, 107, 175, 0.3);
+        }
+
+        .point.active {
+            background-color: #e74c3c;
+            box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.4);
+        }
+
+        .open-set {
+            position: absolute;
+            border: 2px solid #00b894;
+            border-radius: 50%;
+            background-color: rgba(0, 184, 148, 0.1);
+            transition: all 0.3s ease;
+            cursor: move;
+        }
+
+        .open-set:hover {
+            background-color: rgba(0, 184, 148, 0.15);
+        }
+
+        .closed-set {
+            position: absolute;
+            border: 2px solid #e74c3c;
+            border-radius: 4px;
+            background-color: rgba(231, 76, 60, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .topology-controls {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+
+
+        .topology-canvas {
+            width: 100%;
+            height: 350px;
+            border: 2px dashed #dee2e6;
+            border-radius: 12px;
+            margin: 20px 0;
+            background-color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .visualization-toolbar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .visualization-toolbar .btn {
+            flex: 1 1 auto;
+            min-width: 120px;
+        }
+        
+        .visualization-description {
+            background-color: #f8f9fa;
+            border-left: 4px solid #4a6baf;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .visualization-step {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        .visualization-step.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .visualization-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #e9ecef;
+        }
+    </style>
+
+    <script>
+        // Scripts para las visualizaciones interactivas
+        document.addEventListener('DOMContentLoaded', function() {
+            // Configuración del slider de transformación (si existe)
+            const slider = document.getElementById('transform-shape');
+            if (slider) {
+                slider.addEventListener('input', function(e) {
+                    const value = e.target.value;
+                    // Aquí iría la lógica de transformación si fuera necesaria
+                });
+            }
+
+
+            // Mostrar/ocultar soluciones
+            const solutionButtons = document.querySelectorAll('.show-solution');
+            solutionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const solution = this.nextElementSibling;
+                    if (solution.style.display === 'block') {
+                        solution.style.display = 'none';
+                        this.textContent = 'Mostrar Solución';
+                    } else {
+                        solution.style.display = 'block';
+                        this.textContent = 'Ocultar Solución';
+                    }
+                });
+            });
+
+            // Verificación de respuestas
+            document.addEventListener('click', function(e) {
+                // Manejar clics en botones de verificación
+                if (e.target.classList.contains('check-answer') || e.target.closest('.check-answer')) {
+                    const button = e.target.classList.contains('check-answer') ? e.target : e.target.closest('.check-answer');
+                    const container = button.closest('.exercise-box');
+                    const feedback = container.querySelector('.feedback');
+                    const correctAnswer = button.getAttribute('data-correct');
+                    
+                    // Para preguntas de opción múltiple
+                    const selectedRadio = container.querySelector('input[type="radio"]:checked');
+                    
+                    // Para preguntas de sí/no
+                    const isYesNoButton = button.classList.contains('btn') || 
+                                       button.closest('.btn-group') !== null;
+                    
+                    // Para preguntas de texto
+                    const textInput = container.querySelector('input[type="text"]');
+                    
+                    let isCorrect = false;
+                    let userAnswer = '';
+                    
+                    if (selectedRadio) {
+                        // Opción múltiple
+                        userAnswer = selectedRadio.value;
+                        isCorrect = userAnswer === correctAnswer;
+                    } else if (isYesNoButton) {
+                        // Pregunta sí/no
+                        const clickedButton = button.classList.contains('btn') ? button : button.closest('.btn');
+                        userAnswer = clickedButton.textContent.trim().includes('Sí') ? 'Sí' : 'No';
+                        isCorrect = (clickedButton.getAttribute('data-correct') === 'true') === (userAnswer === 'Sí');
+                    } else if (textInput) {
+                        // Respuesta de texto
+                        userAnswer = textInput.value.trim();
+                        // Normalizar la respuesta para comparación
+                        const normalizedUser = userAnswer.replace(/\s+/g, '').toLowerCase();
+                        const normalizedCorrect = correctAnswer.replace(/\s+/g, '').toLowerCase();
+                        isCorrect = normalizedUser === normalizedCorrect;
+                    }
+                    
+                    // Mostrar retroalimentación
+                    if (feedback) {
+                        if (isCorrect) {
+                            feedback.innerHTML = '<div class="alert alert-success p-2"><i class="fas fa-check-circle me-2"></i>¡Correcto! Muy bien hecho.</div>';
+                        } else {
+                            feedback.innerHTML = `
+                                <div class="alert alert-danger p-2">
+                                    <i class="fas fa-times-circle me-2"></i>
+                                    Respuesta incorrecta. Inténtalo de nuevo.
+                                    ${correctAnswer ? `<div class="small mt-1">Sugerencia: La respuesta correcta es <strong>${correctAnswer}</strong></div>` : ''}
+                                </div>`;
+                        }
+                        
+                        // Deshabilitar botones después de responder
+                        if (selectedRadio) {
+                            container.querySelectorAll('input[type="radio"]').forEach(radio => {
+                                radio.disabled = true;
+                            });
+                            button.disabled = true;
+                        } else if (isYesNo) {
+                            container.querySelectorAll('.btn').forEach(btn => {
+                                btn.disabled = true;
+                            });
+                        } else if (textInput) {
+                            textInput.disabled = true;
+                            button.disabled = true;
+                        }
+                    }
+                }
+                
+                // Mostrar/ocultar soluciones
+                if (e.target.classList.contains('show-solution') || e.target.closest('.show-solution')) {
+                    const button = e.target.classList.contains('show-solution') ? e.target : e.target.closest('.show-solution');
+                    const solution = button.nextElementSibling;
+                    if (solution && solution.classList.contains('solution')) {
+                        if (solution.style.display === 'block') {
+                            solution.style.display = 'none';
+                            button.innerHTML = '<i class="fas fa-lightbulb me-1"></i>Mostrar Solución';
+                        } else {
+                            solution.style.display = 'block';
+                            button.innerHTML = '<i class="fas fa-eye-slash me-1"></i>Ocultar Solución';
+                        }
+                    }
+                }
+            });
+
+            // Animación de entrada para las tarjetas
+            const cards = document.querySelectorAll('.feature-card, .card, .example-box');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(card);
+            });
+
+            // Inicializar tooltips de Bootstrap (si existen)
+            if (typeof bootstrap !== 'undefined') {
+                const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+                tooltipTriggerList.map(function (tooltipTriggerEl) {
+                    return new bootstrap.Tooltip(tooltipTriggerEl);
+                });
+                
+                // Inicializar popovers de Bootstrap (si existen)
+                const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+                popoverTriggerList.map(function (popoverTriggerEl) {
+                    return new bootstrap.Popover(popoverTriggerEl);
+                });
+            }
+        });
+        
+        // Función para mostrar/ocultar soluciones
+        function toggleSolution(button) {
+            const solution = button.nextElementSibling;
+            if (solution && solution.classList.contains('solution')) {
+                const isVisible = solution.style.display === 'block';
+                solution.style.display = isVisible ? 'none' : 'block';
+                button.innerHTML = isVisible ? 
+                    '<i class="fas fa-lightbulb me-1"></i>Mostrar Solución' : 
+                    '<i class="fas fa-eye-slash me-1"></i>Ocultar Solución';
+            }
+        }
+    </script>
+{% endblock %}

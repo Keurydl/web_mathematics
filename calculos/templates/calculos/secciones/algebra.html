@@ -1,0 +1,426 @@
+{% extends 'calculos/secciones/base_seccion.html' %}
+{% load static %}
+
+{% block extra_css %}
+<style>
+    /* Estilos específicos para la sección de Álgebra */
+    .feature-card {
+        background: white;
+        border-radius: 10px;
+        padding: 25px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-left: 5px solid #4a6baf;
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .feature-card h3 {
+        color: #2c3e50;
+        margin-bottom: 15px;
+        font-weight: 600;
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 10px;
+    }
+    
+    .feature-card .icon {
+        font-size: 2.5rem;
+        margin-right: 20px;
+        color: #4a6baf;
+        min-width: 60px;
+        text-align: center;
+    }
+    
+    .property-card {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 15px;
+        margin: 15px 0;
+        border-left: 3px solid #4a6baf;
+    }
+    
+    .example-box {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 15px;
+        margin: 15px 0;
+        border-left: 3px solid #28a745;
+    }
+    
+    .example-box-sm {
+        background: #f8f9fa;
+        border-radius: 6px;
+        padding: 10px;
+        margin: 10px 0;
+        font-size: 0.9em;
+    }
+    
+    .formula {
+        background: #f8f9fa;
+        border-radius: 6px;
+        padding: 10px 15px;
+        font-family: 'Courier New', monospace;
+        font-size: 1.1em;
+        margin: 10px 0;
+        display: inline-block;
+    }
+    
+    .paso-solucion {
+        margin: 10px 0;
+        padding: 10px;
+        background: #f8f9fa;
+        border-radius: 6px;
+        border-left: 3px solid #17a2b8;
+    }
+    
+    .paso-numero {
+        font-weight: bold;
+        color: #4a6baf;
+        margin-right: 10px;
+    }
+    
+    .ejercicio {
+        margin: 20px 0;
+        padding: 15px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        background: #fff;
+    }
+    
+    .ejercicio:hover {
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .solucion {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s ease;
+    }
+    
+    .solucion.mostrar {
+        max-height: 1000px;
+    }
+    
+    @media (max-width: 768px) {
+        .feature-card {
+            padding: 15px;
+        }
+        .feature-card .icon {
+            font-size: 2rem;
+            margin-right: 15px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+{{ block.super }}
+
+<div class="container mt-4">
+    <!-- Introducción al Álgebra -->
+    <div class="d-flex align-items-start feature-card">
+        <i class="fas fa-square-root-alt icon"></i>
+        <div>
+            <h3>Introducción al Álgebra</h3>
+            <p>El álgebra es una rama de las matemáticas que utiliza letras y símbolos para representar números y cantidades en fórmulas y ecuaciones. A diferencia de la aritmética, que trabaja con números específicos, el álgebra nos permite generalizar las relaciones matemáticas.</p>
+            
+            <div class="property-card">
+                <h5><i class="fas fa-lightbulb text-warning"></i> ¿Por qué es importante el álgebra?</h5>
+                <ul>
+                    <li>Permite resolver problemas complejos de manera sistemática</li>
+                    <li>Es fundamental para la física, ingeniería, economía y ciencias de la computación</li>
+                    <li>Desarrolla el pensamiento abstracto y lógico</li>
+                    <li>Es la base para matemáticas más avanzadas como el cálculo</li>
+                </ul>
+            </div>
+            
+            <div class="example-box">
+                <h5><i class="fas fa-lightbulb text-warning"></i> Ejemplo de expresión algebraica</h5>
+                <p>En lugar de decir "un número más cinco es igual a doce", en álgebra escribimos:</p>
+                <div class="formula">x + 5 = 12</div>
+                <p>Donde <strong>x</strong> es el número desconocido que estamos tratando de encontrar.</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Expresiones Algebraicas -->
+    <div class="d-flex align-items-start feature-card">
+        <i class="fas fa-calculator icon"></i>
+        <div>
+            <h3>Expresiones Algebraicas</h3>
+            <p>Una expresión algebraica es una combinación de letras y números unidos por operaciones matemáticas.</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="property-card">
+                        <h5>Componentes de una expresión algebraica:</h5>
+                        <ul>
+                            <li><strong>Términos:</strong> Partes de la expresión separadas por + o -</li>
+                            <li><strong>Coeficiente:</strong> Número que multiplica a la variable</li>
+                            <li><strong>Variable:</strong> Letra que representa un valor desconocido</li>
+                            <li><strong>Exponente:</strong> Número que indica la potencia</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="example-box">
+                        <h5>Ejemplo:</h5>
+                        <div class="text-center">
+                            <code>3x² + 5x - 2</code>
+                        </div>
+                        <ul class="mt-2">
+                            <li>3 términos: 3x², 5x, -2</li>
+                            <li>Coeficientes: 3, 5, -2</li>
+                            <li>Variable: x</li>
+                            <li>Exponentes: 2, 1 (implícito en 5x)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="alert alert-info mt-3">
+                <i class="fas fa-info-circle"></i> <strong>Tipos de expresiones algebraicas:</strong>
+                <ul class="mb-0 mt-2">
+                    <li><strong>Monomio:</strong> Un solo término (ej: 3x²)</li>
+                    <li><strong>Binomio:</strong> Dos términos (ej: 2x + 3)</li>
+                    <li><strong>Trinomio:</strong> Tres términos (ej: x² + 5x + 6)</li>
+                    <li><strong>Polinomio:</strong> Cuatro o más términos</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Ecuaciones de Primer Grado -->
+    <div class="d-flex align-items-start feature-card">
+        <i class="fas fa-equals icon"></i>
+        <div>
+            <h3>Ecuaciones de Primer Grado</h3>
+            <p>Una ecuación de primer grado es una igualdad que contiene una o más variables elevadas a la primera potencia.</p>
+            
+            <div class="property-card">
+                <h5>Forma general:</h5>
+                <div class="text-center">
+                    <code>ax + b = 0</code>
+                </div>
+                <p class="mt-2">Donde <code>a</code> y <code>b</code> son números reales, y <code>a ≠ 0</code>.</p>
+            </div>
+            
+            <div class="example-box">
+                <h5><i class="fas fa-lightbulb text-warning"></i> Resolución de ecuaciones de primer grado</h5>
+                <p>Para resolver la ecuación: <code>3x + 5 = 14</code></p>
+                
+                <div class="paso-solucion">
+                    <span class="paso-numero">1.</span> Restamos 5 a ambos lados:
+                    <div class="formula">3x + 5 - 5 = 14 - 5</div>
+                    <div class="formula">3x = 9</div>
+                </div>
+                
+                <div class="paso-solucion">
+                    <span class="paso-numero">2.</span> Dividimos ambos lados entre 3:
+                    <div class="formula">3x/3 = 9/3</div>
+                    <div class="formula">x = 3</div>
+                </div>
+                
+                <div class="alert alert-success mt-2">
+                    <i class="fas fa-check-circle"></i> La solución es <strong>x = 3</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Sistemas de Ecuaciones -->
+    <div class="d-flex align-items-start feature-card">
+        <i class="fas fa-project-diagram icon"></i>
+        <div>
+            <h3>Sistemas de Ecuaciones</h3>
+            <p>Un sistema de ecuaciones es un conjunto de dos o más ecuaciones con las mismas variables.</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="property-card">
+                        <h5>Métodos de resolución:</h5>
+                        <ul>
+                            <li><strong>Sustitución</strong></li>
+                            <li><strong>Igualación</strong></li>
+                            <li><strong>Reducción (o eliminación)</strong></li>
+                            <li><strong>Gráfico</strong></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="example-box">
+                        <h5>Ejemplo de sistema:</h5>
+                        <div class="text-center">
+                            <code>2x + y = 5</code><br>
+                            <code>x - y = 1</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="alert alert-info mt-3">
+                <i class="fas fa-lightbulb"></i> <strong>Consejo:</strong> El método de reducción es especialmente útil cuando puedes eliminar fácilmente una variable sumando o restando las ecuaciones.
+            </div>
+        </div>
+    </div>
+    
+    <!-- Factorización -->
+    <div class="d-flex align-items-start feature-card">
+        <i class="fas fa-cube icon"></i>
+        <div>
+            <h3>Factorización</h3>
+            <p>La factorización es el proceso de expresar un polinomio como producto de factores más simples.</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="property-card">
+                        <h5>Casos de factorización:</h5>
+                        <ul>
+                            <li>Factor común</li>
+                            <li>Diferencia de cuadrados</li>
+                            <li>Trinomio cuadrado perfecto</li>
+                            <li>Suma y diferencia de cubos</li>
+                            <li>Trinomio de la forma x² + bx + c</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="example-box">
+                        <h5>Ejemplo de factor común:</h5>
+                        <p>Factorizar: <code>3x² + 6x</code></p>
+                        <div class="formula">= 3x(x + 2)</div>
+                        
+                        <h5 class="mt-3">Diferencia de cuadrados:</h5>
+                        <p>Factorizar: <code>x² - 9</code></p>
+                        <div class="formula">= (x + 3)(x - 3)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Funciones -->
+    <div class="d-flex align-items-start feature-card">
+        <i class="fas fa-chart-line icon"></i>
+        <div>
+            <h3>Funciones</h3>
+            <p>Una función es una relación entre dos conjuntos en la que a cada elemento del primer conjunto le corresponde exactamente un elemento del segundo conjunto.</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="property-card">
+                        <h5>Tipos de funciones:</h5>
+                        <ul>
+                            <li><strong>Lineal:</strong> f(x) = mx + b</li>
+                            <li><strong>Cuadrática:</strong> f(x) = ax² + bx + c</li>
+                            <li><strong>Polinómica:</strong> f(x) = aₙxⁿ + ... + a₁x + a₀</li>
+                            <li><strong>Racional:</strong> f(x) = P(x)/Q(x)</li>
+                            <li><strong>Exponencial:</strong> f(x) = aˣ</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="example-box">
+                        <h5>Ejemplo de función lineal:</h5>
+                        <p>f(x) = 2x + 3</p>
+                        <p>Donde:</p>
+                        <ul>
+                            <li>m = 2 (pendiente)</li>
+                            <li>b = 3 (ordenada al origen)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Ejercicios Prácticos -->
+    <div class="d-flex align-items-start feature-card">
+        <i class="fas fa-tasks icon"></i>
+        <div>
+            <h3>Ejercicios Prácticos</h3>
+            <p>Practica lo aprendido con estos ejercicios. Intenta resolverlos por tu cuenta antes de ver las soluciones.</p>
+            
+            <div class="ejercicio">
+                <h5>Ejercicio 1: Resuelve la ecuación</h5>
+                <p>2(x - 3) + 5 = 3x - 1</p>
+                <button class="btn btn-outline-primary btn-sm mostrar-solucion" data-ejercicio="1">
+                    <i class="far fa-lightbulb"></i> Mostrar solución
+                </button>
+                <div class="solucion" id="solucion-1">
+                    <div class="paso-solucion mt-3">
+                        <span class="paso-numero">1.</span> Distribuimos el 2:
+                        <div class="formula">2x - 6 + 5 = 3x - 1</div>
+                    </div>
+                    <div class="paso-solucion">
+                        <span class="paso-numero">2.</span> Simplificamos términos semejantes:
+                        <div class="formula">2x - 1 = 3x - 1</div>
+                    </div>
+                    <div class="paso-solucion">
+                        <span class="paso-numero">3.</span> Restamos 2x a ambos lados:
+                        <div class="formula">-1 = x - 1</div>
+                    </div>
+                    <div class="paso-solucion">
+                        <span class="paso-numero">4.</span> Sumamos 1 a ambos lados:
+                        <div class="formula">0 = x</div>
+                    </div>
+                    <div class="alert alert-success mt-2">
+                        <i class="fas fa-check-circle"></i> La solución es <strong>x = 0</strong>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ejercicio">
+                <h5>Ejercicio 2: Factoriza el polinomio</h5>
+                <p>x² + 5x + 6</p>
+                <button class="btn btn-outline-primary btn-sm mostrar-solucion" data-ejercicio="2">
+                    <i class="far fa-lightbulb"></i> Mostrar solución
+                </button>
+                <div class="solucion" id="solucion-2">
+                    <div class="paso-solucion mt-3">
+                        <span class="paso-numero">1.</span> Buscamos dos números que sumados den 5 y multiplicados den 6:
+                        <div class="formula">2 + 3 = 5</div>
+                        <div class="formula">2 × 3 = 6</div>
+                    </div>
+                    <div class="paso-solucion">
+                        <span class="paso-numero">2.</span> Escribimos la factorización:
+                        <div class="formula">(x + 2)(x + 3)</div>
+                    </div>
+                    <div class="alert alert-success mt-2">
+                        <i class="fas fa-check-circle"></i> La factorización es <strong>(x + 2)(x + 3)</strong>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="alert alert-info mt-3">
+                <i class="fas fa-lightbulb"></i> <strong>Consejo:</strong> Practica resolviendo diferentes tipos de ejercicios para mejorar tu comprensión del álgebra. La práctica constante es clave para dominar estos conceptos.
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Script para mostrar/ocultar soluciones -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Mostrar/ocultar soluciones
+        document.querySelectorAll('.mostrar-solucion').forEach(boton => {
+            boton.addEventListener('click', function() {
+                const ejercicioId = this.getAttribute('data-ejercicio');
+                const solucion = document.getElementById(`solucion-${ejercicioId}`);
+                solucion.classList.toggle('mostrar');
+                
+                // Cambiar el texto del botón
+                if (solucion.classList.contains('mostrar')) {
+                    this.innerHTML = '<i class="far fa-eye-slash"></i> Ocultar solución';
+                } else {
+                    this.innerHTML = '<i class="far fa-lightbulb"></i> Mostrar solución';
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

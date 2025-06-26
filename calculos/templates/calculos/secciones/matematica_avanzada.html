@@ -1,0 +1,88 @@
+{% extends 'calculos/secciones/base_seccion.html' %}
+
+{% block content %}
+    {{ block.super }}
+
+    <!-- Font Awesome CDN para los iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        .feature-card {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .feature-card h3 {
+            font-size: 1.5rem;
+            color: #343a40;
+        }
+        .feature-card .icon {
+            font-size: 2.5rem;
+            color: #007bff;
+            margin-right: 15px;
+        }
+    </style>
+
+    <div class="container mt-4">
+
+        <!-- Calculadora de Matrices -->
+        <div class="d-flex align-items-start feature-card">
+            <i class="fas fa-th icon"></i>
+            <div>
+                <h3>Calculadora de Matrices</h3>
+                <p>Una matriz es un arreglo rectangular de números. El álgebra de matrices se usa para resolver sistemas de ecuaciones, en gráficos por computadora y mucho más.</p>
+                <ul>
+                    <li><strong>Operaciones básicas:</strong> Suma, resta y multiplicación.</li>
+                    <li><strong>Funciones avanzadas:</strong> Determinante, transpuesta e inversa.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Números Complejos -->
+        <div class="d-flex align-items-start feature-card">
+            <i class="fas fa-square-root-alt icon"></i>
+            <div>
+                <h3>Números Complejos</h3>
+                <p>Son una extensión de los números reales que incluyen una parte imaginaria (con la unidad <i>i</i>, donde i² = -1). Son fundamentales en álgebra, electrónica y física cuántica.</p>
+                <ul>
+                    <li><strong>Operaciones aritméticas:</strong> Suma, resta, producto y división.</li>
+                    <li><strong>Teorema de De Moivre:</strong> Para calcular potencias y raíces fácilmente.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Resolución de Ecuaciones -->
+        <div class="d-flex align-items-start feature-card">
+            <i class="fas fa-equals icon"></i>
+            <div>
+                <h3>Resolución de Ecuaciones</h3>
+                <p>Consiste en encontrar las 'raíces' o valores que hacen que una ecuación sea verdadera. Para las más complejas, se usan métodos numéricos que aproximan la solución.</p>
+                <ul>
+                    <li><strong>Ecuaciones polinómicas:</strong> De segundo, tercer o mayor grado.</li>
+                    <li><strong>Método de Newton-Raphson:</strong> Un algoritmo eficiente para encontrar raíces.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Teoría de Números -->
+        <div class="d-flex align-items-start feature-card">
+            <i class="fas fa-sort-numeric-down icon"></i>
+            <div>
+                <h3>Teoría de Números</h3>
+                <p>Es la rama de las matemáticas que estudia las propiedades de los números enteros, como la primalidad y la divisibilidad. Es la base de la criptografía moderna.</p>
+                <ul>
+                    <li><strong>MCD y mcm:</strong> Máximo Común Divisor y Mínimo Común Múltiplo.</li>
+                    <li><strong>Factores primos y primalidad:</strong> Descomponer un número y verificar si es primo.</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

@@ -1,0 +1,600 @@
+{% extends 'calculos/secciones/base_seccion.html' %}
+
+{% block content %}
+    {{ block.super }}
+    
+    <!-- Font Awesome CDN para los iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        .feature-card {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .feature-card h3 {
+            font-size: 1.5rem;
+            color: #343a40;
+            margin-bottom: 15px;
+        }
+        .feature-card .icon {
+            font-size: 2.5rem;
+            color: #007bff;
+            margin-right: 15px;
+        }
+        .example-box {
+            background-color: #f1f8ff;
+            border-left: 4px solid #007bff;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        .property-card {
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+    </style>
+
+    <div class="container mt-4">
+        <h2 class="mb-4">Aritmética Básica</h2>
+        
+        <!-- Introducción -->
+        <div class="d-flex align-items-start feature-card">
+            <i class="fas fa-calculator icon"></i>
+            <div>
+                <h3>¿Qué es la Aritmética?</h3>
+                <p>La aritmética es la rama de las matemáticas que estudia los números y las operaciones básicas que se pueden realizar con ellos: suma, resta, multiplicación y división.</p>
+            </div>
+        </div>
+
+        <!-- Sección de Suma -->
+        <div class="d-flex align-items-start feature-card">
+            <i class="fas fa-plus-circle icon" style="color: #28a745;"></i>
+            <div>
+                <h3>Suma ➕</h3>
+                <p>La suma es una operación que combina dos o más números para obtener un total.</p>
+                
+                <div class="property-card">
+                    <h5><i class="fas fa-arrow-circle-right" style="color: #28a745;"></i> Propiedades de la Suma</h5>
+                    <div class="pl-4">
+                        <p class="mb-2"><strong>Conmutativa:</strong> El orden de los sumandos no altera el resultado.</p>
+                        <div class="text-center mb-3">
+                            <code class="p-2 bg-light rounded">a + b = b + a</code>
+                        </div>
+                        
+                        <p class="mb-2"><strong>Asociativa:</strong> El modo de agrupar los sumandos no varía el resultado.</p>
+                        <div class="text-center mb-3">
+                            <code class="p-2 bg-light rounded">(a + b) + c = a + (b + c)</code>
+                        </div>
+                        
+                        <p class="mb-2"><strong>Elemento neutro:</strong> El 0 es el elemento neutro de la suma.</p>
+                        <div class="text-center">
+                            <code class="p-2 bg-light rounded">a + 0 = a</code>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="example-box mt-4">
+                    <h5><i class="fas fa-lightbulb" style="color: #ffc107;"></i> Ejemplo Práctico</h5>
+                    <p class="mb-2">Si tenemos 3 manzanas y compramos 2 más, en total tendremos:</p>
+                    <div class="text-center">
+                        <code class="p-2 bg-white rounded">3 + 2 = 5</code>
+                    </div>
+                    <p class="mt-2 mb-0">En total tendremos <strong>5 manzanas</strong>.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de Resta -->
+        <div class="d-flex align-items-start feature-card">
+            <i class="fas fa-minus-circle icon" style="color: #dc3545;"></i>
+            <div>
+                <h3>Resta ➖</h3>
+                <p>La resta es la operación inversa a la suma, que nos permite encontrar la diferencia entre dos números o quitar una cantidad de otra.</p>
+                
+                <div class="property-card">
+                    <h5><i class="fas fa-arrow-circle-right" style="color: #dc3545;"></i> Características de la Resta</h5>
+                    <div class="pl-4">
+                        <p class="mb-2"><strong>No es conmutativa:</strong> El orden de los números sí importa.</p>
+                        <div class="text-center mb-3">
+                            <code class="p-2 bg-light rounded">a - b ≠ b - a</code>
+                            <small class="d-block text-muted">(a menos que a = b)</small>
+                        </div>
+                        
+                        <p class="mb-2"><strong>No es asociativa:</strong> La forma de agrupar los números afecta el resultado.</p>
+                        <div class="text-center">
+                            <code class="p-2 bg-light rounded">(a - b) - c ≠ a - (b - c)</code>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="example-box mt-4">
+                    <h5><i class="fas fa-lightbulb" style="color: #ffc107;"></i> Ejemplo Práctico</h5>
+                    <p class="mb-2">Si teníamos 5 galletas y nos comimos 2, nos quedan:</p>
+                    <div class="text-center">
+                        <code class="p-2 bg-white rounded">5 - 2 = 3</code>
+                    </div>
+                    <p class="mt-2 mb-0">Nos quedan <strong>3 galletas</strong>.</p>
+                </div>
+                
+                <div class="alert alert-info mt-3">
+                    <i class="fas fa-info-circle"></i> <strong>Dato curioso:</strong> La resta no tiene elemento neutro, ya que <code>a - 0 = a</code> pero <code>0 - a = -a</code>.
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de Multiplicación -->
+        <div class="d-flex align-items-start feature-card">
+            <i class="fas fa-times-circle icon" style="color: #ffc107;"></i>
+            <div>
+                <h3>Multiplicación ✖️</h3>
+                <p>La multiplicación es una suma repetida de un mismo número. Representa el total de elementos en un arreglo rectangular.</p>
+                
+                <div class="property-card">
+                    <h5><i class="fas fa-arrow-circle-right" style="color: #ffc107;"></i> Propiedades de la Multiplicación</h5>
+                    <div class="pl-4">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="mb-2"><strong>Conmutativa:</strong> El orden de los factores no altera el producto.</p>
+                                <div class="text-center mb-3">
+                                    <code class="p-2 bg-light rounded">a × b = b × a</code>
+                                </div>
+                                
+                                <p class="mb-2"><strong>Asociativa:</strong> El modo de agrupar los factores no varía el producto.</p>
+                                <div class="text-center mb-3">
+                                    <code class="p-2 bg-light rounded">(a × b) × c = a × (b × c)</code>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="mb-2"><strong>Elemento neutro:</strong> El 1 es el elemento neutro.</p>
+                                <div class="text-center mb-3">
+                                    <code class="p-2 bg-light rounded">a × 1 = a</code>
+                                </div>
+                                
+                                <p class="mb-2"><strong>Distributiva:</strong> Respecto a la suma.</p>
+                                <div class="text-center">
+                                    <code class="p-2 bg-light rounded">a × (b + c) = (a × b) + (a × c)</code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="example-box mt-4">
+                    <h5><i class="fas fa-lightbulb" style="color: #17a2b8;"></i> Ejemplo Práctico</h5>
+                    <p class="mb-2">Si tenemos 4 cajas con 3 lápices cada una, en total tenemos:</p>
+                    <div class="text-center mb-2">
+                        <code class="p-2 bg-white rounded">4 × 3 = 12</code>
+                    </div>
+                    <p class="mb-0">En total tenemos <strong>12 lápices</strong>.</p>
+                </div>
+                
+                <div class="alert alert-success mt-3">
+                    <i class="fas fa-tips"></i> <strong>Consejo:</strong> Para multiplicar por 10, 100, 1000, etc., simplemente añade los ceros correspondientes al número.
+                    <div class="mt-2">
+                        <code>5 × 100 = 500</code>
+                        <span class="mx-2">•</span>
+                        <code>12 × 1000 = 12,000</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de División -->
+        <div class="d-flex align-items-start feature-card">
+            <i class="fas fa-divide icon" style="color: #17a2b8;"></i>
+            <div>
+                <h3>División ➗</h3>
+                <p>La división es la operación inversa a la multiplicación, que nos permite repartir una cantidad en partes iguales o encontrar cuántas veces un número está contenido en otro.</p>
+                
+                <div class="property-card">
+                    <h5><i class="fas fa-arrow-circle-right" style="color: #17a2b8;"></i> Características de la División</h5>
+                    <div class="pl-4">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="mb-2"><strong>No es conmutativa:</strong> El orden de los números importa.</p>
+                                <div class="text-center mb-3">
+                                    <code class="p-2 bg-light rounded">a ÷ b ≠ b ÷ a</code>
+                                    <small class="d-block text-muted">(a menos que a = b)</small>
+                                </div>
+                                
+                                <p class="mb-2"><strong>No es asociativa:</strong> La forma de agrupar afecta el resultado.</p>
+                                <div class="text-center">
+                                    <code class="p-2 bg-light rounded">(a ÷ b) ÷ c ≠ a ÷ (b ÷ c)</code>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="mb-2"><strong>División por 1:</strong> Cualquier número dividido entre 1 es igual a sí mismo.</p>
+                                <div class="text-center mb-3">
+                                    <code class="p-2 bg-light rounded">a ÷ 1 = a</code>
+                                </div>
+                                
+                                <p class="mb-2"><strong>División por 0:</strong> No está definida en matemáticas.</p>
+                                <div class="text-center">
+                                    <code class="p-2 bg-light rounded text-danger">a ÷ 0 = No definido</code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="example-box mt-4">
+                    <h5><i class="fas fa-lightbulb" style="color: #ffc107;"></i> Ejemplo Práctico</h5>
+                    <p class="mb-2">Si repartimos 12 caramelos entre 4 amigos, a cada uno le tocan:</p>
+                    <div class="text-center">
+                        <code class="p-2 bg-white rounded">12 ÷ 4 = 3</code>
+                    </div>
+                    <p class="mt-2 mb-0">Cada amigo recibe <strong>3 caramelos</strong>.</p>
+                </div>
+                
+                <div class="alert alert-warning mt-3">
+                    <i class="fas fa-exclamation-triangle"></i> <strong>Importante:</strong> La división por cero no está definida en matemáticas. Si intentas dividir cualquier número entre cero, el resultado es indefinido.
+                    <div class="mt-2">
+                        <code class="text-danger">5 ÷ 0 = No definido</code>
+                    </div>
+                </div>
+                
+                <div class="alert alert-info mt-3">
+                    <i class="fas fa-tips"></i> <strong>Consejo:</strong> Para dividir entre 10, 100, 1000, etc., simplemente mueve la coma decimal hacia la izquierda tantos lugares como ceros tenga el divisor.
+                    <div class="mt-2">
+                        <code>350 ÷ 100 = 3.5</code>
+                        <span class="mx-2">•</span>
+                        <code>7200 ÷ 1000 = 7.2</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de Orden de Operaciones -->
+        <div class="d-flex align-items-start feature-card">
+            <i class="fas fa-sort-numeric-down icon" style="color: #6c757d;"></i>
+            <div>
+                <h3>🔢 Orden de las Operaciones</h3>
+                <p>Cuando hay varias operaciones en una misma expresión matemática, es fundamental seguir un orden específico para obtener el resultado correcto.</p>
+                
+                <div class="property-card">
+                    <h5><i class="fas fa-list-ol" style="color: #6c757d;"></i> Jerarquía de Operaciones</h5>
+                    <div class="pl-4">
+                        <ol class="pl-3">
+                            <li class="mb-2">
+                                <strong>Paréntesis</strong> - Las operaciones dentro de paréntesis tienen la máxima prioridad.
+                                <div class="text-center my-2">
+                                    <code class="p-2 bg-light rounded">( )</code>
+                                </div>
+                            </li>
+                            <li class="mb-2">
+                                <strong>Exponentes y raíces</strong> - Potencias y raíces se resuelven a continuación.
+                                <div class="text-center my-2">
+                                    <code class="p-2 bg-light rounded">a², √a</code>
+                                </div>
+                            </li>
+                            <li class="mb-2">
+                                <strong>Multiplicaciones y Divisiones</strong> - De izquierda a derecha.
+                                <div class="text-center my-2">
+                                    <code class="p-2 bg-light rounded">×, ÷</code> (misma prioridad)
+                                </div>
+                            </li>
+                            <li class="mb-2">
+                                <strong>Sumas y Restas</strong> - De izquierda a derecha.
+                                <div class="text-center my-2">
+                                    <code class="p-2 bg-light rounded">+, -</code> (misma prioridad)
+                                </div>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="alert alert-info mt-4">
+                    <h5><i class="fas fa-acorn"></i> Regla nemotécnica: PEMDAS</h5>
+                    <p class="mb-1">Para recordar el orden, usa la palabra PEMDAS:</p>
+                    <ul class="mb-0">
+                        <li><strong>P</strong>aréntesis</li>
+                        <li><strong>E</strong>xponentes</li>
+                        <li><strong>M</strong>ultiplicación y <strong>D</strong>ivisión (de izquierda a derecha)</li>
+                        <li><strong>A</strong>dición y <strong>S</strong>ustracción (de izquierda a derecha)</li>
+                    </ul>
+                </div>
+                
+                <div class="example-box mt-4">
+                    <h5><i class="fas fa-lightbulb" style="color: #ffc107;"></i> Ejemplo Resuelto</h5>
+                    <p class="mb-2">Calcular: <code>3 + 4 × 2 - (10 - 5) ÷ 5</code></p>
+                    <ol class="pl-3">
+                        <li class="mb-2"><strong>Paréntesis:</strong> <code>(10 - 5) = 5</code></li>
+                        <li class="mb-2"><strong>Multiplicación/División:</strong> <code>4 × 2 = 8</code> y <code>5 ÷ 5 = 1</code></li>
+                        <li class="mb-2"><strong>Suma/Resta:</strong> <code>3 + 8 - 1 = 10</code></li>
+                    </ol>
+                    <div class="text-center mt-3">
+                        <code class="p-2 bg-white rounded">3 + 4 × 2 - (10 - 5) ÷ 5 = 10</code>
+                    </div>
+                    <p class="mt-2 text-muted">
+                        <i class="fas fa-info-circle"></i> <strong>Nota:</strong> Si no se sigue el orden correcto, podrías obtener resultados incorrectos. 
+                        Por ejemplo, si sumáramos primero: <code>(3 + 4) × 2 = 14</code> (incorrecto).
+                    </p>
+                </div>
+                
+                <div class="alert alert-warning mt-3">
+                    <i class="fas fa-exclamation-triangle"></i> <strong>Consejo:</strong> Cuando tengas dudas, usa paréntesis para agrupar las operaciones y asegurar el orden correcto de resolución.
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de Consejos Prácticos -->
+        <div class="d-flex align-items-start feature-card">
+            <i class="fas fa-lightbulb icon" style="color: #ffc107;"></i>
+            <div>
+                <h3>💡 Consejos y Trucos</h3>
+                <p class="mb-4">Aprende estos trucos para realizar cálculos mentales más rápidos y eficientes.</p>
+                
+                <div class="row">
+                    <!-- Columna 1: Suma y Resta -->
+                    <div class="col-md-6 mb-4">
+                        <div class="property-card h-100">
+                            <h5 class="text-primary"><i class="fas fa-plus-circle"></i> Para la Suma</h5>
+                            <ul class="pl-3">
+                                <li class="mb-2">
+                                    <strong>Agrupa para hacer 10:</strong>
+                                    <div class="example-box-sm my-2">
+                                        <code>7 + 5 + 3 = (7 + 3) + 5 = 10 + 5 = 15</code>
+                                    </div>
+                                </li>
+                                <li class="mb-2">
+                                    <strong>Descompón números:</strong>
+                                    <div class="example-box-sm my-2">
+                                        <code>37 + 48 = (30 + 40) + (7 + 8) = 70 + 15 = 85</code>
+                                    </div>
+                                </li>
+                                <li class="mb-2">
+                                    <strong>Suma redondeando:</strong>
+                                    <div class="example-box-sm my-2">
+                                        <code>198 + 65 = (200 + 65) - 2 = 265 - 2 = 263</code>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Columna 2: Multiplicación y División -->
+                    <div class="col-md-6 mb-4">
+                        <div class="property-card h-100">
+                            <h5 class="text-primary"><i class="fas fa-times-circle"></i> Para la Multiplicación</h5>
+                            <ul class="pl-3">
+                                <li class="mb-2">
+                                    <strong>Multiplicar por 5:</strong>
+                                    <div class="example-box-sm my-2">
+                                        <code>24 × 5 = (24 × 10) ÷ 2 = 240 ÷ 2 = 120</code>
+                                    </div>
+                                </li>
+                                <li class="mb-2">
+                                    <strong>Multiplicar por 9:</strong>
+                                    <div class="example-box-sm my-2">
+                                        <code>7 × 9 = (7 × 10) - 7 = 70 - 7 = 63</code>
+                                    </div>
+                                </li>
+                                <li class="mb-2">
+                                    <strong>Multiplicar números cercanos a 100:</strong>
+                                    <div class="example-box-sm my-2">
+                                        <code>98 × 104 = (100 - 2)(100 + 4) = 10,000 + 400 - 200 - 8 = 10,192</code>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Columna 3: Trucos varios -->
+                    <div class="col-md-6 mb-4">
+                        <div class="property-card h-100">
+                            <h5 class="text-primary"><i class="fas fa-divide"></i> Para la División</h5>
+                            <ul class="pl-3">
+                                <li class="mb-2">
+                                    <strong>Dividir entre 5:</strong>
+                                    <div class="example-box-sm my-2">
+                                        <code>245 ÷ 5 = 245 × 2 ÷ 10 = 490 ÷ 10 = 49</code>
+                                    </div>
+                                </li>
+                                <li class="mb-2">
+                                    <strong>Porcentajes:</strong>
+                                    <div class="example-box-sm my-2">
+                                        <code>15% de 80 = (10% de 80) + (5% de 80) = 8 + 4 = 12</code>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Columna 4: Trucos varios -->
+                    <div class="col-md-6 mb-4">
+                        <div class="property-card h-100">
+                            <h5 class="text-primary"><i class="fas fa-magic"></i> Trucos Varios</h5>
+                            <ul class="pl-3">
+                                <li class="mb-2">
+                                    <strong>Cuadrado de números terminados en 5:</strong>
+                                    <div class="example-box-sm my-2">
+                                        <code>25² = (2 × 3) seguido de 25 = 625</code><br>
+                                        <code>35² = (3 × 4) seguido de 25 = 1,225</code>
+                                    </div>
+                                </li>
+                                <li class="mb-2">
+                                    <strong>Multiplicar por 11:</strong>
+                                    <div class="example-box-sm my-2">
+                                        <code>23 × 11 = 2 (2+3) 3 = 253</code><br>
+                                        <code>57 × 11 = 5 (5+7) 7 = 5 12 7 = 627</code>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="alert alert-info mt-3">
+                    <i class="fas fa-lightbulb"></i> <strong>Consejo final:</strong> Practica estos trucos regularmente para mejorar tu velocidad de cálculo mental. ¡La práctica hace al maestro!
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de Práctica Interactiva -->
+        <div class="d-flex align-items-start feature-card">
+            <i class="fas fa-puzzle-piece icon" style="color: #6610f2;"></i>
+            <div>
+                <h3>🧩 Práctica lo Aprendido</h3>
+                <p class="mb-4">¡Pon a prueba tus conocimientos con estos ejercicios interactivos! Intenta resolverlos por tu cuenta antes de ver las soluciones.</p>
+                
+                <div class="row">
+                    <!-- Ejercicio 1 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="property-card h-100">
+                            <h5 class="text-primary">Ejercicio 1: Orden de operaciones</h5>
+                            <p class="mb-3">Calcula el siguiente ejercicio respetando el orden de operaciones:</p>
+                            <div class="text-center mb-3">
+                                <code class="p-3 bg-light rounded d-inline-block">15 - (3 + 2) × 2</code>
+                            </div>
+                            <button class="btn btn-outline-primary btn-block mostrar-respuesta" data-respuesta="5">
+                                <i class="far fa-lightbulb"></i> Mostrar Solución
+                            </button>
+                            <div class="solucion mt-3 d-none">
+                                <h6 class="text-success">Solución paso a paso:</h6>
+                                <ol class="pl-3">
+                                    <li>Primero los paréntesis: <code>(3 + 2) = 5</code></li>
+                                    <li>Luego la multiplicación: <code>5 × 2 = 10</code></li>
+                                    <li>Finalmente la resta: <code>15 - 10 = 5</code></li>
+                                </ol>
+                                <div class="alert alert-success mt-2 mb-0">
+                                    <strong>Respuesta final:</strong> <code>5</code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Ejercicio 2 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="property-card h-100">
+                            <h5 class="text-primary">Ejercicio 2: Multiplicación</h5>
+                            <p class="mb-3">Si compras 5 paquetes con 6 lápices cada uno, ¿cuántos lápices tienes en total?</p>
+                            <div class="text-center mb-3">
+                                <code class="p-3 bg-light rounded d-inline-block">5 × 6 = ?</code>
+                            </div>
+                            <button class="btn btn-outline-primary btn-block mostrar-respuesta" data-respuesta="30">
+                                <i class="far fa-lightbulb"></i> Mostrar Solución
+                            </button>
+                            <div class="solucion mt-3 d-none">
+                                <h6 class="text-success">Solución:</h6>
+                                <p>Multiplicamos el número de paquetes por la cantidad de lápices en cada uno:</p>
+                                <div class="text-center mb-2">
+                                    <code>5 × 6 = 30</code>
+                                </div>
+                                <div class="alert alert-success mt-2 mb-0">
+                                    <strong>Respuesta final:</strong> <code>30</code> lápices en total
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Ejercicio 3 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="property-card h-100">
+                            <h5 class="text-primary">Ejercicio 3: División con resta</h5>
+                            <p class="mb-3">Tienes 24 galletas para repartir entre 6 amigos. Si luego te comes 2 galletas, ¿cuántas te quedan a cada amigo?</p>
+                            <div class="text-center mb-3">
+                                <code class="p-3 bg-light rounded d-inline-block">(24 ÷ 6) - 2 = ?</code>
+                            </div>
+                            <button class="btn btn-outline-primary btn-block mostrar-respuesta" data-respuesta="2">
+                                <i class="far fa-lightbulb"></i> Mostrar Solución
+                            </button>
+                            <div class="solucion mt-3 d-none">
+                                <h6 class="text-success">Solución paso a paso:</h6>
+                                <ol class="pl-3">
+                                    <li>Primero la división: <code>24 ÷ 6 = 4</code> galletas por amigo</li>
+                                    <li>Luego la resta: <code>4 - 2 = 2</code> galletas</li>
+                                </ol>
+                                <div class="alert alert-success mt-2 mb-0">
+                                    <strong>Respuesta final:</strong> A cada amigo le quedan <code>2</code> galletas
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Ejercicio 4 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="property-card h-100">
+                            <h5 class="text-primary">Ejercicio 4: Problema combinado</h5>
+                            <p class="mb-3">Un libro tiene 150 páginas. Si lees 15 páginas al día, ¿cuántos días tardarás en leerlo? Si ya has leído 3 días, ¿cuántas páginas te quedan?</p>
+                            <button class="btn btn-outline-primary btn-block mostrar-respuesta" data-respuesta="10,105">
+                                <i class="far fa-lightbulb"></i> Mostrar Solución
+                            </button>
+                            <div class="solucion mt-3 d-none">
+                                <h6 class="text-success">Solución:</h6>
+                                <p><strong>Primera pregunta:</strong> Días para leer el libro completo</p>
+                                <div class="text-center mb-2">
+                                    <code>150 ÷ 15 = 10</code> días
+                                </div>
+                                <p><strong>Segunda pregunta:</strong> Páginas leídas en 3 días</p>
+                                <div class="text-center mb-2">
+                                    <code>15 × 3 = 45</code> páginas
+                                </div>
+                                <p><strong>Tercera pregunta:</strong> Páginas restantes</p>
+                                <div class="text-center mb-2">
+                                    <code>150 - 45 = 105</code> páginas
+                                </div>
+                                <div class="alert alert-success mt-2 mb-0">
+                                    <strong>Respuesta final:</strong> Tardarás <code>10</code> días en leerlo todo. 
+                                    Después de 3 días, te quedarán <code>105</code> páginas por leer.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="alert alert-info mt-3">
+                    <i class="fas fa-star"></i> <strong>¡Sigue practicando!</strong> La práctica regular es la clave para dominar la aritmética. 
+                    Intenta crear tus propios ejercicios similares para reforzar tu aprendizaje.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .card {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card-header {
+            font-weight: bold;
+        }
+        .example {
+            border-left: 4px solid #007bff;
+        }
+        .mostrar-respuesta {
+            transition: all 0.3s ease;
+        }
+        .mostrar-respuesta:hover {
+            transform: scale(1.05);
+        }
+    </style>
+
+    <script>
+        // Script para mostrar las respuestas
+        document.addEventListener('DOMContentLoaded', function() {
+            const botones = document.querySelectorAll('.mostrar-respuesta');
+            botones.forEach(boton => {
+                boton.addEventListener('click', function() {
+                    const respuesta = this.getAttribute('data-respuesta');
+                    this.textContent = `Respuesta: ${respuesta}`;
+                    this.classList.remove('btn-outline-primary');
+                    this.classList.add('btn-success');
+                    this.disabled = true;
+                });
+            });
+        });
+    </script>
+{% endblock %}

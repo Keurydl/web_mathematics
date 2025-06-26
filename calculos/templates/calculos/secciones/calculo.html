@@ -1,0 +1,661 @@
+{% extends 'calculos/secciones/base_seccion.html' %}
+
+{% block content %}
+    {{ block.super }}
+    
+    <div class="container mt-4">
+        <!-- Sección de Introducción -->
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-calculator"></i>
+            </div>
+            <h2>Introducción al Cálculo</h2>
+            <p>El cálculo es una rama de las matemáticas que estudia el cambio y la acumulación. Se divide principalmente en dos áreas:</p>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Cálculo Diferencial</h5>
+                            <p class="card-text">Estudia las tasas de cambio y pendientes de curvas.</p>
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Cálculo Integral</h5>
+                            <p class="card-text">Estudia la acumulación de cantidades y áreas bajo curvas.</p>
+                            <i class="fas fa-chart-area"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Límites -->
+        <div class="feature-card mt-4">
+            <h3>Límites</h3>
+            <p>El concepto fundamental del cálculo que describe el valor al que se acerca una función cuando la variable independiente se acerca a un punto determinado.</p>
+            
+            <div class="example-box">
+                <h5><i class="fas fa-lightbulb"></i> Definición Formal</h5>
+                <p>Decimos que el límite de f(x) cuando x tiende a 'a' es L si para todo ε > 0 existe un δ > 0 tal que si 0 < |x - a| < δ, entonces |f(x) - L| < ε.</p>
+                <div class="math-formula">
+                    lim<sub>x→a</sub> f(x) = L
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h5><i class="fas fa-question-circle"></i> Ejemplo Práctico</h5>
+                <p>Calcular el límite de f(x) = (x² - 1)/(x - 1) cuando x tiende a 1:</p>
+                <div class="math-formula">
+                    lim<sub>x→1</sub> (x² - 1)/(x - 1) = lim<sub>x→1</sub> (x + 1) = 2
+                </div>
+            </div>
+        </div>
+
+        <!-- Derivadas -->
+        <div class="feature-card mt-4">
+            <h3>Derivadas</h3>
+            <p>La derivada de una función en un punto representa la pendiente de la recta tangente a la función en ese punto.</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="example-box">
+                        <h5><i class="fas fa-ruler-combined"></i> Definición</h5>
+                        <p>La derivada de f en x es:</p>
+                        <div class="math-formula">
+                            f'(x) = lim<sub>h→0</sub> [f(x + h) - f(x)]/h
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="example-box">
+                        <h5><i class="fas fa-tachometer-alt"></i> Interpretación Física</h5>
+                        <p>Si s(t) es la posición de un objeto en el tiempo t, entonces:</p>
+                        <ul>
+                            <li>s'(t) = Velocidad instantánea</li>
+                            <li>s''(t) = Aceleración</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box mt-3">
+                <h5><i class="fas fa-table"></i> Reglas de Derivación</h5>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Función</th>
+                                <th>Derivada</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>k (constante)</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td>x<sup>n</sup></td>
+                                <td>nx<sup>n-1</sup></td>
+                            </tr>
+                            <tr>
+                                <td>e<sup>x</sup></td>
+                                <td>e<sup>x</sup></td>
+                            </tr>
+                            <tr>
+                                <td>ln(x)</td>
+                                <td>1/x</td>
+                            </tr>
+                            <tr>
+                                <td>sin(x)</td>
+                                <td>cos(x)</td>
+                            </tr>
+                            <tr>
+                                <td>cos(x)</td>
+                                <td>-sin(x)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Integrales -->
+        <div class="feature-card mt-4">
+            <h3>Integrales</h3>
+            <p>La integral de una función representa el área bajo la curva de la función en un intervalo dado.</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="example-box">
+                        <h5><i class="fas fa-superscript"></i> Integral Indefinida</h5>
+                        <p>La antiderivada de una función f(x) es una función F(x) tal que F'(x) = f(x).</p>
+                        <div class="math-formula">
+                            ∫f(x)dx = F(x) + C
+                        </div>
+                        <p>donde C es la constante de integración.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="example-box">
+                        <h5><i class="fas fa-border-all"></i> Integral Definida</h5>
+                        <p>El área bajo la curva de f(x) desde a hasta b:</p>
+                        <div class="math-formula">
+                            ∫<sub>a</sub><sup>b</sup> f(x)dx = F(b) - F(a)
+                        </div>
+                        <p>donde F es una antiderivada de f.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box mt-3">
+                <h5><i class="fas fa-table"></i> Tabla de Integrales Básicas</h5>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Función</th>
+                                <th>Integral</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>k (constante)</td>
+                                <td>kx + C</td>
+                            </tr>
+                            <tr>
+                                <td>x<sup>n</sup> (n ≠ -1)</td>
+                                <td>(x<sup>n+1</sup>)/(n+1) + C</td>
+                            </tr>
+                            <tr>
+                                <td>1/x</td>
+                                <td>ln|x| + C</td>
+                            </tr>
+                            <tr>
+                                <td>e<sup>x</sup></td>
+                                <td>e<sup>x</sup> + C</td>
+                            </tr>
+                            <tr>
+                                <td>sin(x)</td>
+                                <td>-cos(x) + C</td>
+                            </tr>
+                            <tr>
+                                <td>cos(x)</td>
+                                <td>sin(x) + C</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Teorema Fundamental del Cálculo -->
+        <div class="feature-card mt-4">
+            <h3>Teorema Fundamental del Cálculo</h3>
+            <p>Establece la conexión entre derivación e integración.</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="example-box">
+                        <h5><i class="fas fa-link"></i> Primera Parte</h5>
+                        <p>Si f es continua en [a,b] y F es una antiderivada de f en [a,b], entonces:</p>
+                        <div class="math-formula">
+                            ∫<sub>a</sub><sup>b</sup> f(x)dx = F(b) - F(a)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="example-box">
+                        <h5><i class="fas fa-exchange-alt"></i> Segunda Parte</h5>
+                        <p>Si f es continua en [a,b] y F(x) = ∫<sub>a</sub><sup>x</sup> f(t)dt, entonces F es diferenciable y:</p>
+                        <div class="math-formula">
+                            F'(x) = f(x)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Aplicaciones -->
+        <div class="feature-card mt-4">
+            <h3>Aplicaciones del Cálculo</h3>
+            
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-chart-line"></i> Optimización</h5>
+                            <p class="card-text">Encontrar valores máximos y mínimos de funciones para resolver problemas de optimización en economía, ingeniería y ciencias.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-atom"></i> Física</h5>
+                            <p class="card-text">Cinemática, dinámica, electromagnetismo, termodinámica y mecánica cuántica utilizan ampliamente el cálculo.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-dna"></i> Biología</h5>
+                            <p class="card-text">Modelado de crecimiento poblacional, difusión de enfermedades y dinámica de fluidos en sistemas biológicos.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ejercicios Prácticos -->
+        <div class="feature-card mt-4">
+            <h3>Ejercicios Prácticos</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="exercise-box">
+                        <h5><i class="fas fa-pencil-alt"></i> Ejercicio 1: Derivadas</h5>
+                        <p>Encuentra la derivada de:</p>
+                        <p>f(x) = 3x<sup>4</sup> - 2x<sup>3</sup> + 5x - 7</p>
+                        <button class="btn btn-sm btn-outline-primary show-solution">Mostrar Solución</button>
+                        <div class="solution">
+                            <p>Solución: f'(x) = 12x<sup>3</sup> - 6x<sup>2</sup> + 5</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="exercise-box">
+                        <h5><i class="fas fa-calculator"></i> Ejercicio 2: Integrales</h5>
+                        <p>Calcula la integral:</p>
+                        <p>∫(4x<sup>3</sup> - 3x<sup>2</sup> + 2x - 1)dx</p>
+                        <button class="btn btn-sm btn-outline-primary show-solution">Mostrar Solución</button>
+                        <div class="solution">
+                            <p>Solución: x<sup>4</sup> - x<sup>3</sup> + x<sup>2</sup> - x + C</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        :root {
+            --primary-color: #4a6baf;
+            --secondary-color: #6c5ce7;
+            --accent-color: #00b894;
+            --light-bg: #f8f9fa;
+            --dark-text: #2c3e50;
+            --light-text: #6c757d;
+            --card-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: #f5f7fb;
+            color: var(--dark-text);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--card-shadow);
+            border-top: 4px solid var(--primary-color);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+        }
+        
+        .feature-icon {
+            font-size: 2.8rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-shadow: 0 3px 6px rgba(0,0,0,0.1);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1);
+            color: var(--secondary-color);
+        }
+        
+        .math-formula {
+            background: linear-gradient(145deg, #f8f9fa, #ffffff);
+            border-left: 4px solid var(--primary-color);
+            padding: 15px 20px;
+            margin: 15px 0;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 1.1em;
+            overflow-x: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: var(--transition);
+        }
+
+        .math-formula:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .example-box {
+            background: linear-gradient(145deg, #ffffff, #f5f7fb);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid var(--accent-color);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            transition: var(--transition);
+        }
+
+        .example-box:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        
+        .exercise-box {
+            background: white;
+            border: none;
+            border-radius: 12px;
+            padding: 20px;
+            height: 100%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: var(--transition);
+            border-top: 3px solid var(--secondary-color);
+        }
+
+        .exercise-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+        }
+        
+        .solution {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: linear-gradient(145deg, #f1f8ff, #e3f2fd);
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .card {
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            border-top: 3px solid var(--primary-color);
+        }
+
+        .card:hover {
+            transform: translateY(-7px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+        }
+
+        .card-body {
+            padding: 25px;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 25px;
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+
+        h3 {
+            color: var(--dark-text);
+            font-weight: 600;
+            margin: 30px 0 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), transparent);
+            border-radius: 2px;
+        }
+
+        h4, h5 {
+            color: var(--dark-text);
+            font-weight: 600;
+            margin-top: 25px;
+        }
+
+        .btn-outline-primary {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+            font-weight: 500;
+            border-radius: 50px;
+            padding: 8px 20px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn-outline-primary:hover {
+            color: white;
+            background-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(74, 107, 175, 0.3);
+        }
+
+        .btn-outline-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            z-index: -1;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .btn-outline-primary:hover::before {
+            opacity: 1;
+        }
+
+        .table {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        }
+
+        .table thead th {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.85em;
+            letter-spacing: 0.5px;
+        }
+
+        .table tbody tr:hover {
+            background-color: rgba(74, 107, 175, 0.05);
+        }
+
+        /* Animaciones */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Efecto de onda en los botones */
+        .btn-ripple {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-ripple:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%, -50%);
+            transform-origin: 50% 50%;
+        }
+
+        .btn-ripple:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
+        }
+    </style>
+
+    <script>
+        // Mostrar/ocultar soluciones con animación
+        document.addEventListener('DOMContentLoaded', function() {
+            // Efecto de botones
+            const buttons = document.querySelectorAll('.show-solution');
+            buttons.forEach(button => {
+                // Agregar clase para el efecto ripple
+                button.classList.add('btn-ripple');
+                
+                button.addEventListener('click', function(e) {
+                    const solution = this.nextElementSibling;
+                    const isVisible = solution.style.display === 'block';
+                    
+                    // Animación de botón
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                    
+                    // Mostrar/ocultar solución con animación
+                    if (isVisible) {
+                        solution.style.animation = 'fadeOut 0.3s ease-in-out';
+                        setTimeout(() => {
+                            solution.style.display = 'none';
+                            this.innerHTML = '<i class="fas fa-eye me-2"></i>Mostrar Solución';
+                        }, 250);
+                    } else {
+                        solution.style.display = 'block';
+                        solution.style.animation = 'fadeIn 0.5s ease-in-out';
+                        this.innerHTML = '<i class="fas fa-eye-slash me-2"></i>Ocultar Solución';
+                    }
+                });
+            });
+
+            // Agregar animación a las tarjetas al hacer scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Aplicar animación a las tarjetas
+            document.querySelectorAll('.feature-card, .card, .example-box').forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = `opacity 0.5s ease ${index * 0.1}s, transform 0.5s ease ${index * 0.1}s`;
+                observer.observe(el);
+            });
+
+            // Efecto de hover en las fórmulas matemáticas
+            const mathFormulas = document.querySelectorAll('.math-formula');
+            mathFormulas.forEach(formula => {
+                formula.addEventListener('mouseenter', () => {
+                    formula.style.transform = 'translateX(8px)';
+                    formula.style.boxShadow = '0 8px 20px rgba(0,0,0,0.12)';
+                });
+                
+                formula.addEventListener('mouseleave', () => {
+                    formula.style.transform = 'translateX(0)';
+                    formula.style.boxShadow = '0 2px 4px rgba(0,0,0,0.05)';
+                });
+            });
+        });
+    </script>
+    
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(-10px); }
+        }
+        
+        .feature-card, .card, .example-box {
+            will-change: transform, opacity;
+        }
+    </style>
+{% endblock %}
